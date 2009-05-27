@@ -65,7 +65,6 @@
     <Compile Include="Commands\GitCommand.cs" />
     <Compile Include="Commands\GitCommitToolCommand.cs" />
     <Compile Include="Commands\GitGuiCommand.cs" />
-    <Compile Include="Commands\GitGuiRepoCommand.cs" />
     <Compile Include="Commands\GitHistoryCommand.cs" />
     <Compile Include="Commands\GitInitCommand.cs" />
     <Compile Include="Extensions.cs" />
@@ -79,6 +78,8 @@
     <Compile Include="GitMenuPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PkgCmdID.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="Singleton.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">
@@ -100,6 +101,8 @@
     <None Include="Resources\Images_32bit.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\git16_32.png" />
+    <Content Include="Resources\git48_32.png" />
     <Content Include="Resources\Package.ico" />
   </ItemGroup>
   <PropertyGroup>

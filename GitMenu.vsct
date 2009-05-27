@@ -67,7 +67,7 @@
 
       <Button guid="guidGitMenuCmdSet" id="cmdGitAddAll" priority="0x0100" type="Button">
         <Parent guid="guidGitMenuCmdSet" id="GitMenu" />
-        <!-- Icon guid="guidImages" id="bmpPic1" /-->
+        <Icon guid="guidOfficeIcon" id="msotcidNoIcon" />
         <CommandFlag>DynamicVisibility</CommandFlag>
         <Strings>
           
@@ -79,6 +79,7 @@
 
       <Button guid="guidGitMenuCmdSet" id="cmdGitCommitTool" priority="0x0100" type="Button">
         <Parent guid="guidGitMenuCmdSet" id="GitMenu" />
+        <Icon guid="guidOfficeIcon" id="msotcidNoIcon" />
         <CommandFlag>DynamicVisibility</CommandFlag>
         <Strings>
           <CommandName>cmdGitCommitTool</CommandName>
@@ -89,6 +90,7 @@
 
       <Button guid="guidGitMenuCmdSet" id="cmdGitHistory" priority="0x0100" type="Button">
         <Parent guid="guidGitMenuCmdSet" id="GitMenu" />
+        <Icon guid="guidOfficeIcon" id="msotcidNoIcon" />
         <CommandFlag>DynamicVisibility</CommandFlag>
         <Strings>
           <CommandName>cmdGitHistory</CommandName>
@@ -99,6 +101,7 @@
 
       <Button guid="guidGitMenuCmdSet" id="cmdGitBlame" priority="0x0100" type="Button">
         <Parent guid="guidGitMenuCmdSet" id="GitMenu" />
+        <Icon guid="guidOfficeIcon" id="msotcidNoIcon" />
         <CommandFlag>DynamicVisibility</CommandFlag>
         <Strings>
           <CommandName>cmdGitBlame</CommandName>
@@ -109,6 +112,7 @@
 
       <Button guid="guidGitMenuCmdSet" id="cmdGitGui" priority="0x0100" type="Button">
         <Parent guid="guidGitMenuCmdSet" id="GitMenu" />
+        <Icon guid="guidGitImage" id="git16_32" />
         <CommandFlag>DynamicVisibility</CommandFlag>
         <Strings>
           <CommandName>cmdGitGui</CommandName>
@@ -119,6 +123,7 @@
 
       <Button guid="guidGitMenuCmdSet" id="cmdGitInit" priority="0x0100" type="Button">
         <Parent guid="guidGitMenuCmdSet" id="GitMenu" />
+        <Icon guid="guidOfficeIcon" id="msotcidNoIcon" />
         <CommandFlag>DynamicVisibility</CommandFlag>
         <Strings>
           <CommandName>cmdGitInit</CommandName>
@@ -129,6 +134,7 @@
 
       <Button guid="guidGitMenuCmdSet" id="cmdGitBash" priority="0x0100" type="Button">
         <Parent guid="guidGitMenuCmdSet" id="GitMenu" />
+        <Icon guid="guidGitImage" id="git16_32" />
         <CommandFlag>DynamicVisibility</CommandFlag>
         <Strings>
           <CommandName>cmdGitBash</CommandName>
@@ -146,6 +152,7 @@
             inside a button definition. An important aspect of this declaration is that the element id 
             must be the actual index (1-based) of the bitmap inside the bitmap strip. -->
       <Bitmap guid="guidImages" href="Resources\Images_32bit.bmp" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows"/>
+      <Bitmap guid="guidGitImage" href="Resources\git16_32.png" usedList="git16_32"/>
 
     </Bitmaps>
  
@@ -173,6 +180,14 @@
       <IDSymbol name="bmpPicSearch" value="3" />
       <IDSymbol name="bmpPicX" value="4" />
       <IDSymbol name="bmpPicArrows" value="5" />
+    </GuidSymbol>
+    <GuidSymbol name ="guidGitImage" value="{22c53c51-e03b-4fa0-b9e2-e7a24cd6c565}" >
+      <!--<IDSymbol name="git48_8" value="1" />-->
+      <!--<IDSymbol name="git32_8" value="2" />-->
+      <!--<IDSymbol name="git16_8" value="3" />-->
+      <IDSymbol name="git16_32" value="1" />
+      <!--<IDSymbol name="git32_32" value="5" />
+      <IDSymbol name="git16_32" value="6" />-->
     </GuidSymbol>
   </Symbols>
 
