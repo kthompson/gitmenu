@@ -19,9 +19,9 @@ namespace GitMenu
         public void Initialize()
         {
             var menuCommandService = this.ServiceProvider.GetService<IMenuCommandService, OleMenuCommandService>();
-            menuCommandService.AddCommand(new Commands.AddAllCommand());
-            menuCommandService.AddCommand(new Commands.GitCommitToolCommand());
-            menuCommandService.AddCommand(new Commands.GitInitCommand());
+            menuCommandService.AddCommand(new Commands.AddAllCommand(this.ServiceProvider));
+            menuCommandService.AddCommand(new Commands.GitCommitToolCommand(this.ServiceProvider));
+            menuCommandService.AddCommand(new Commands.GitInitCommand(this.ServiceProvider));
         }
     }
 }

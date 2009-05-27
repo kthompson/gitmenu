@@ -32,6 +32,14 @@
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EnvDTE, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>E:\Program Files\Microsoft Visual Studio 9.0\Common7\IDE\PublicAssemblies\EnvDTE.dll</HintPath>
+    </Reference>
+    <Reference Include="EnvDTE80, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>E:\Program Files\Microsoft Visual Studio 9.0\Common7\IDE\PublicAssemblies\EnvDTE80.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.OLE.Interop" />
     <Reference Include="Microsoft.VisualStudio.Shell.Interop" />
     <Reference Include="Microsoft.VisualStudio.Shell.Interop.8.0" />
@@ -52,8 +60,13 @@
     <Compile Include="CommandSet.cs" />
     <Compile Include="Commands\AddAllCommand.cs" />
     <Compile Include="Commands\BaseCommand.cs" />
+    <Compile Include="Commands\GitBashCommand.cs" />
+    <Compile Include="Commands\GitBlameCommand.cs" />
     <Compile Include="Commands\GitCommand.cs" />
     <Compile Include="Commands\GitCommitToolCommand.cs" />
+    <Compile Include="Commands\GitGuiCommand.cs" />
+    <Compile Include="Commands\GitGuiRepoCommand.cs" />
+    <Compile Include="Commands\GitHistoryCommand.cs" />
     <Compile Include="Commands\GitInitCommand.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Guids.cs" />
