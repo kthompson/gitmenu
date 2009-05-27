@@ -9,6 +9,7 @@ using EnvDTE80;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using Process = System.Diagnostics.Process;
 
 namespace GitMenu.Commands
 {
@@ -27,23 +28,127 @@ namespace GitMenu.Commands
         {
             if (base.CanExecute())
             {
+                if (this.Selection == CommandFlags.Always)
+                    return true;
+
                 ProjectItem item = GitCommand.SelectedItem;
                 if (item != null)
                 {
                     var props = (Properties)item.Properties;
-                    var name = (from prop in props.OfType<Property>()
-                               where prop.Name == "FullPath"
-                               select new FileSystemInfo(prop.Value.ToString())).FirstOrDefault();
-                    var isDirectory = ((name.Attributes & FileAttributes.Directory) == FileAttributes.Directory);
+                    var fullPath = props.GetPropertyByName("FullPath");
+
+                    if ((this.Selection & GetMenuMask(fullPath.Value.ToString())) == this.Selection)
+                    {
+                        return true;
+                    }
+                    
                     Trace.WriteLine(string.Format(CultureInfo.CurrentCulture, "Testing for execution of {0} on item: {1}", this.GetType().ToString(), item.Name));
-                    return true;
+                    //return true;
                 }
             }
 
             return false;
         }
 
+        public static string WDFromPath(string path)
+        {
+           bool isDirectory;
+           return WDFromPath(path, out isDirectory);
+        }
 
+        /// <summary>
+        /// Gets Working Directory from a path.
+        /// </summary>
+        /// <param name="path">The path to a file or folder.</param>
+        /// <param name="isDirectory">if set to <c>true</c> path is a directory.</param>
+        /// <returns></returns>
+        public static string WDFromPath(string path, out bool isDirectory)
+        {
+            isDirectory = Directory.Exists(path);
+
+            if (!isDirectory)
+                path = path.Substring(0, path.LastIndexOf(Path.DirectorySeparatorChar));
+
+            return path;
+        }
+
+        public static CommandFlags GetMenuMask(string path)
+        {
+            bool isDirectory;
+            var wd = WDFromPath(path, out isDirectory);
+
+            CommandFlags selection = isDirectory ? CommandFlags.Directory : CommandFlags.File;
+            string output;
+
+            int status = Exec(wd, out output, "rev-parse","--show-prefix");
+
+            var eol = output.IndexOf('\n');
+            var line = output;
+
+            if(eol >= 0)
+                line = output.Substring(0, eol);
+
+            if (status < 0)
+                selection = CommandFlags.Last;
+            else if (status > 0)
+                selection |= CommandFlags.NoRepository;
+            else
+            {
+                var headPath = "HEAD";
+                if (!isDirectory)
+                    headPath = string.Format("HEAD:{0}{1}", line, path.Substring(wd.Length + 1));
+
+                status = Exec(wd, "rev-parse", "--verify", headPath);
+                if (status < 0)
+                    selection = CommandFlags.Last;
+                else
+                    selection |= CommandFlags.Repository | (status > 0 ? CommandFlags.NoTrack : CommandFlags.Track);
+            }
+
+            return selection;
+        }
+
+        private static int Exec(string wd, params string[] args)
+        {
+            string output;
+            return Exec(wd, out output, args);
+        }
+
+        private static int Exec(string wd, out string output, params string[] args)
+        {
+            var start = new ProcessStartInfo
+            {
+                FileName = Settings.Instance.GitPath,
+                Arguments = string.Join(" ", args),
+                WindowStyle = ProcessWindowStyle.Hidden,
+                CreateNoWindow = true,
+                RedirectStandardOutput = true,
+                WorkingDirectory = wd,
+                UseShellExecute = false,
+            };
+            try
+            {
+                using (var proc = Process.Start(start))
+                {
+                    output = proc.StandardOutput.ReadToEnd();
+
+                    return proc.ExitCode;
+
+
+
+                }
+            }
+            catch(Exception ex)
+            {
+                Trace.WriteLine(ex.Message);
+                throw;
+            }
+        }
+
+        public static bool HasGitRepository(string path)
+        {
+            throw new NotImplementedException();
+        }
 
         #region static properties
 
@@ -51,7 +156,7 @@ namespace GitMenu.Commands
         {
             get
             {
-                return GitCommand.Dte.SelectedItems.OfType<ProjectItem>();
+                return GitCommand.Dte.SelectedItems.Cast<SelectedItem>().Select(item => item.ProjectItem);
             }
         }
 
@@ -94,12 +199,13 @@ namespace GitMenu.Commands
     [Flags]
     public enum CommandFlags
     {
-        Always = 0,
-        File = (1 << 0),
-        Directory = (1 << 1),
-        NoRepository = (1 << 2),
-        Repository = (1 << 3),
-        Track = (1 << 4),
-        NoTrack = (1 << 5),
+        Last            = -1,
+        Always          = 0,
+        File            = (1 << 0),
+        Directory       = (1 << 1),
+        NoRepository    = (1 << 2),
+        Repository      = (1 << 3),
+        Track           = (1 << 4),
+        NoTrack         = (1 << 5),
     }
 }

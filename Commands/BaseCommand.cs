@@ -26,7 +26,8 @@ namespace GitMenu.Commands
         {
             OleMenuCommand command = sender as OleMenuCommand;
 
-            command.Enabled = command.Visible = command.Supported = this.CanExecute();
+            //command.Enabled = command.Visible = command.Supported = this.CanExecute();
+            command.Visible = this.CanExecute();
         }
 
         protected virtual bool CanExecute()
