@@ -39,18 +39,29 @@ namespace GitMenu.Commands
         }
 
         private static CommandFlags lastMenuMask;
-        private static ProjectItem lastProjectItem;
+        private static string lastCheckedPath;
         public static CommandFlags GetMenuMask()
         {
+            string pathToCheck = string.Empty;
             ProjectItem item = GitCommand.SelectedProjectItem;
-            if (item == lastProjectItem)
+            if (item != null)
+            {
+                pathToCheck = item.GetFullPath();
+            }
+            else
+            {
+                var item2 = GitCommand.SelectedProject;
+                if (item2 != null)
+                    pathToCheck = Directory.GetParent(item2.FileName).FullName;
+                else
+                    return CommandFlags.Always;
+            }
+
+            if (pathToCheck == lastCheckedPath)
                 return lastMenuMask;
 
-            if (item == null)
-                return CommandFlags.Always;
-
-            lastProjectItem = item;
-            lastMenuMask = GetMenuMask(item.GetFullPath());
+            lastCheckedPath = pathToCheck;
+            lastMenuMask = GetMenuMask(lastCheckedPath);
             return lastMenuMask;
         }
 
