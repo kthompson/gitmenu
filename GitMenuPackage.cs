@@ -41,6 +41,8 @@ namespace GitMenu
     [ProvideLoadKey("Standard", "1.0", "Package Name", "GitMenu", 1)]
     // This attribute is needed to let the shell know that this package exposes some menus.
     [ProvideMenuResource(1000, 1)]
+    //Load package right away(UICONTEXT_NoSolution)
+    [ProvideAutoLoad("{ADFC4E64-0397-11D1-9F4E-00A0C911004F}")]
     [Guid(GuidList.guidGitMenuPkgString)]
     public sealed class GitMenuPackage : Package
     {
