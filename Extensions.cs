@@ -30,5 +30,10 @@ namespace GitMenu
         {
             return ((flags & flag) == flag);
         }
+
+        public static string GetFullPath(this ProjectItem item)
+        {
+            return item.Properties.GetPropertyByName("FullPath").Value.ToString();
+        }
     }
 }

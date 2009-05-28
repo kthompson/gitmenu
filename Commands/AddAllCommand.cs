@@ -14,5 +14,12 @@ namespace GitMenu.Commands
         {
             
         }
+
+        protected override void OnExecute()
+        {
+            string file = GitCommand.SelectedItem.GetFullPath();
+            string wd = WDFromPath(file);
+            Exec(wd, true, Settings.Instance.GitPath, "add", "--all");
+        }
     }
 }

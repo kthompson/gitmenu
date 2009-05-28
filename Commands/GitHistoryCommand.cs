@@ -12,5 +12,18 @@ namespace GitMenu.Commands
         {
 
         }
+
+        protected override void OnExecute()
+        {
+            string file = GitCommand.SelectedItem.GetFullPath();
+            bool isDir;
+            string wd = WDFromPath(file, out isDir);
+            string name = "";
+            string output;
+            if(!isDir)
+                name = file.Substring(wd.Length + 1);
+
+            Exec(wd, true, out output, Settings.Instance.ShPath,  "--login", "-i", "/bin/gitk", "HEAD", "--", name);
+        }
     }
 }

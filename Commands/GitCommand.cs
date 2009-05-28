@@ -31,23 +31,26 @@ namespace GitMenu.Commands
                 if (this.Selection == CommandFlags.Always)
                     return true;
 
-                ProjectItem item = GitCommand.SelectedItem;
-                if (item != null)
-                {
-                    var props = (Properties)item.Properties;
-                    var fullPath = props.GetPropertyByName("FullPath");
-
-                    if ((this.Selection & GetMenuMask(fullPath.Value.ToString())) == this.Selection)
-                    {
-                        return true;
-                    }
-                    
-                    Trace.WriteLine(string.Format(CultureInfo.CurrentCulture, "Testing for execution of {0} on item: {1}", this.GetType().ToString(), item.Name));
-                    //return true;
-                }
+                if ((this.Selection & GetMenuMask()) == this.Selection)
+                    return true;
             }
 
             return false;
+        }
+
+        private static CommandFlags lastMenuMask;
+        private static ProjectItem lastProjectItem;
+        public static CommandFlags GetMenuMask()
+        {
+             ProjectItem item = GitCommand.SelectedItem;
+             if (item == lastProjectItem)
+                 return lastMenuMask;
+
+             if (item == null)
+                 return CommandFlags.Always;
+
+             lastMenuMask = GetMenuMask(item.GetFullPath());
+             return lastMenuMask;
         }
 
         public static string WDFromPath(string path)
@@ -80,7 +83,7 @@ namespace GitMenu.Commands
             CommandFlags selection = isDirectory ? CommandFlags.Directory : CommandFlags.File;
             string output;
 
-            int status = Exec(wd, out output, "rev-parse","--show-prefix");
+            int status = Exec(wd, true, out output, Settings.Instance.GitPath, "rev-parse","--show-prefix");
 
             var eol = output.IndexOf('\n');
             var line = output;
@@ -98,7 +101,7 @@ namespace GitMenu.Commands
                 if (!isDirectory)
                     headPath = string.Format("HEAD:{0}{1}", line, path.Substring(wd.Length + 1));
 
-                status = Exec(wd, "rev-parse", "--verify", headPath);
+                status = Exec(wd, true, Settings.Instance.GitPath, "rev-parse", "--verify", headPath);
                 if (status < 0)
                     selection = CommandFlags.Last;
                 else
@@ -108,20 +111,20 @@ namespace GitMenu.Commands
             return selection;
         }
 
-        private static int Exec(string wd, params string[] args)
+        protected static int Exec(string wd, bool hidden, params string[] args)
         {
             string output;
-            return Exec(wd, out output, args);
+            return Exec(wd, hidden, out output, args);
         }
 
-        private static int Exec(string wd, out string output, params string[] args)
+        protected static int Exec(string wd, bool hidden, out string output, params string[] args)
         {
             var start = new ProcessStartInfo
             {
-                FileName = Settings.Instance.GitPath,
-                Arguments = string.Join(" ", args),
-                WindowStyle = ProcessWindowStyle.Hidden,
-                CreateNoWindow = true,
+                FileName = args.First(),
+                Arguments = string.Join(" ", args.Skip(1).ToArray()),
+                WindowStyle = hidden ? ProcessWindowStyle.Hidden : ProcessWindowStyle.Normal,
+                CreateNoWindow = hidden,
                 RedirectStandardOutput = true,
                 WorkingDirectory = wd,
                 UseShellExecute = false,

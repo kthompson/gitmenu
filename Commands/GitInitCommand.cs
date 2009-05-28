@@ -12,5 +12,12 @@ namespace GitMenu.Commands
             : base(provider, PkgCmdIDList.cmdGitInit, CommandFlags.NoRepository, "Git I&nit Here")
         {
         }
+
+        protected override void OnExecute()
+        {
+            string file = GitCommand.SelectedItem.GetFullPath();
+            string wd = WDFromPath(file);
+            Exec(wd, true, Settings.Instance.GitPath, "init");
+        }
     }
 }

@@ -9,10 +9,12 @@ namespace GitMenu
     {
 
         public string GitPath { get; private set; }
+        public string ShPath { get; private set; }
 
         public Settings()
         {
             this.GitPath = @"C:\Program Files\Git\bin\git.exe";
+            this.ShPath = @"C:\Program Files\Git\bin\sh.exe";
         }
     }
 }

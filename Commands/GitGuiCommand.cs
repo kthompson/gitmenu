@@ -11,5 +11,12 @@ namespace GitMenu.Commands
             : base(provider, PkgCmdIDList.cmdGitGui, CommandFlags.Always, "Git &Gui")
         {
         }
+
+        protected override void OnExecute()
+        {
+            string file = GitCommand.SelectedItem.GetFullPath();
+            string wd = WDFromPath(file);
+            Exec(wd, true, Settings.Instance.GitPath, "gui");
+        }
     }
 }
