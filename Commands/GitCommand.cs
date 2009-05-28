@@ -42,15 +42,16 @@ namespace GitMenu.Commands
         private static ProjectItem lastProjectItem;
         public static CommandFlags GetMenuMask()
         {
-             ProjectItem item = GitCommand.SelectedItem;
-             if (item == lastProjectItem)
-                 return lastMenuMask;
+            ProjectItem item = GitCommand.SelectedItem;
+            if (item == lastProjectItem)
+                return lastMenuMask;
 
-             if (item == null)
-                 return CommandFlags.Always;
+            if (item == null)
+                return CommandFlags.Always;
 
-             lastMenuMask = GetMenuMask(item.GetFullPath());
-             return lastMenuMask;
+            lastProjectItem = item;
+            lastMenuMask = GetMenuMask(item.GetFullPath());
+            return lastMenuMask;
         }
 
         public static string WDFromPath(string path)
