@@ -42,7 +42,7 @@ namespace GitMenu.Commands
         private static ProjectItem lastProjectItem;
         public static CommandFlags GetMenuMask()
         {
-            ProjectItem item = GitCommand.SelectedItem;
+            ProjectItem item = GitCommand.SelectedProjectItem;
             if (item == lastProjectItem)
                 return lastMenuMask;
 
@@ -156,19 +156,43 @@ namespace GitMenu.Commands
 
         #region static properties
 
-        protected static IEnumerable<ProjectItem> SelectedItems
+        protected static IEnumerable<SelectedItem> SelectedItems
         {
             get
             {
-                return GitCommand.Dte.SelectedItems.Cast<SelectedItem>().Select(item => item.ProjectItem);
+                return GitCommand.Dte.SelectedItems.Cast<SelectedItem>();
             }
         }
 
-        protected static ProjectItem SelectedItem
+        protected static IEnumerable<ProjectItem> SelectedProjectItems
         {
             get
             {
-                return GitCommand.SelectedItems.FirstOrDefault();
+                return SelectedItems.Select(item => item.ProjectItem);
+            }
+        }
+
+        protected static IEnumerable<Project> SelectedProjects
+        {
+            get
+            {
+                return SelectedItems.Select(item => item.Project);
+            }
+        }
+
+        protected static ProjectItem SelectedProjectItem
+        {
+            get
+            {
+                return GitCommand.SelectedProjectItems.FirstOrDefault();
+            }
+        }
+
+        protected static Project SelectedProject
+        {
+            get
+            {
+                return GitCommand.SelectedProjects.FirstOrDefault();
             }
         }
 
