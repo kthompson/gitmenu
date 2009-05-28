@@ -42,20 +42,7 @@ namespace GitMenu.Commands
         private static string lastCheckedPath;
         public static CommandFlags GetMenuMask()
         {
-            string pathToCheck = string.Empty;
-            ProjectItem item = GitCommand.SelectedProjectItem;
-            if (item != null)
-            {
-                pathToCheck = item.GetFullPath();
-            }
-            else
-            {
-                var item2 = GitCommand.SelectedProject;
-                if (item2 != null)
-                    pathToCheck = Directory.GetParent(item2.FileName).FullName;
-                else
-                    return CommandFlags.Always;
-            }
+            var pathToCheck = GetSelectedPath();
 
             if (pathToCheck == lastCheckedPath)
                 return lastMenuMask;
@@ -63,6 +50,19 @@ namespace GitMenu.Commands
             lastCheckedPath = pathToCheck;
             lastMenuMask = GetMenuMask(lastCheckedPath);
             return lastMenuMask;
+        }
+
+        public static string GetSelectedPath()
+        {
+            var item = GitCommand.SelectedProjectItem;
+            if (item != null)
+                return item.GetFullPath();
+
+            var item2 = GitCommand.SelectedProject;
+            if (item2 != null)
+                return Directory.GetParent(item2.FileName).FullName;
+
+            return string.Empty;
         }
 
         public static string WDFromPath(string path)
