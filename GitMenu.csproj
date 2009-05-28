@@ -98,11 +98,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Key.snk" />
-    <None Include="Resources\Images_32bit.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\git16_32.png" />
-    <Content Include="Resources\git48_32.png" />
+    <None Include="Resources\Add.png" />
+    <None Include="Resources\AddAll.png" />
+    <None Include="Resources\Blame.png" />
+    <None Include="Resources\Commit.png" />
+    <None Include="Resources\Delete.png" />
+    <None Include="Resources\GitSmall.png" />
+    <None Include="Resources\History.png" />
+    <None Include="Resources\Init.png" />
     <Content Include="Resources\Package.ico" />
   </ItemGroup>
   <PropertyGroup>
