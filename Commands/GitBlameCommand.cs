@@ -15,7 +15,7 @@ namespace GitMenu.Commands
 
         protected override void OnExecute()
         {
-            string file = GitCommand.SelectedProjectItem.GetFullPath();
+            string file = GitCommand.GetSelectedPath();
             bool isDir;
             string wd = WDFromPath(file, out isDir);
             string name = "";
