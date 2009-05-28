@@ -1,0 +1,5 @@
+need to display updated file icons:
+show all but cached
+  git ls-files -t --full-name -dom -X .gitignore
+show cache files
+  git ls-files -t --full-name -domc -X .gitignore
