@@ -146,11 +146,9 @@ namespace GitMenu.Commands
                 using (var proc = Process.Start(start))
                 {
                     output = proc.StandardOutput.ReadToEnd();
+                    proc.WaitForExit();
 
                     return proc.ExitCode;
-
-
-
                 }
             }
             catch(Exception ex)
