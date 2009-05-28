@@ -25,8 +25,6 @@ namespace GitMenu.Commands
         protected virtual void OnBeforeQueryStatus(object sender, EventArgs e)
         {
             OleMenuCommand command = sender as OleMenuCommand;
-
-            //command.Enabled = command.Visible = command.Supported = this.CanExecute();
             command.Visible = this.CanExecute();
         }
 
