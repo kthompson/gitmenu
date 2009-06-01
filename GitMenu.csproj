@@ -60,13 +60,13 @@
     <Compile Include="CommandSet.cs" />
     <Compile Include="Commands\AddAllCommand.cs" />
     <Compile Include="Commands\BaseCommand.cs" />
+    <Compile Include="Commands\BlameCommand.cs" />
+    <Compile Include="Commands\CommitToolCommand.cs" />
     <Compile Include="Commands\GitBashCommand.cs" />
-    <Compile Include="Commands\GitBlameCommand.cs" />
     <Compile Include="Commands\GitCommand.cs" />
-    <Compile Include="Commands\GitCommitToolCommand.cs" />
     <Compile Include="Commands\GitGuiCommand.cs" />
-    <Compile Include="Commands\GitHistoryCommand.cs" />
-    <Compile Include="Commands\GitInitCommand.cs" />
+    <Compile Include="Commands\HistoryCommand.cs" />
+    <Compile Include="Commands\InitCommand.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Guids.cs" />
     <Compile Include="Resources.Designer.cs">

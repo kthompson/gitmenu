@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 
 namespace GitMenu.Commands
 {
-    public class GitInitCommand : GitCommand
+    public class InitCommand : GitCommand
     {
-        public GitInitCommand(IServiceProvider provider)
+        public InitCommand(IServiceProvider provider)
             : base(provider, PkgCmdIDList.cmdGitInit, CommandFlags.NoRepository, "Git I&nit Here")
         {
         }

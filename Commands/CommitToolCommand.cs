@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 
 namespace GitMenu.Commands
 {
-    public class GitCommitToolCommand : GitCommand
+    public class CommitToolCommand : GitCommand
     {
-        public GitCommitToolCommand(IServiceProvider provider)
+        public CommitToolCommand(IServiceProvider provider)
             : base(provider, PkgCmdIDList.cmdGitCommitTool, CommandFlags.Repository, "Git &Commit Tool")
         {
 

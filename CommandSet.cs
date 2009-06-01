@@ -20,12 +20,12 @@ namespace GitMenu
         {
             var mcs = this.ServiceProvider.GetService<IMenuCommandService, OleMenuCommandService>();
             mcs.AddCommand(new Commands.AddAllCommand(this.ServiceProvider));
-            mcs.AddCommand(new Commands.GitCommitToolCommand(this.ServiceProvider));
-            mcs.AddCommand(new Commands.GitInitCommand(this.ServiceProvider));
-            mcs.AddCommand(new Commands.GitBlameCommand(this.ServiceProvider));
+            mcs.AddCommand(new Commands.CommitToolCommand(this.ServiceProvider));
+            mcs.AddCommand(new Commands.InitCommand(this.ServiceProvider));
+            mcs.AddCommand(new Commands.BlameCommand(this.ServiceProvider));
             mcs.AddCommand(new Commands.GitBashCommand(this.ServiceProvider));
             mcs.AddCommand(new Commands.GitGuiCommand(this.ServiceProvider));
-            mcs.AddCommand(new Commands.GitHistoryCommand(this.ServiceProvider));
+            mcs.AddCommand(new Commands.HistoryCommand(this.ServiceProvider));
         }
     }
 }

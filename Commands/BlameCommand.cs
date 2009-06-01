@@ -5,10 +5,10 @@ using System.Text;
 
 namespace GitMenu.Commands
 {
-    public class GitHistoryCommand : GitCommand
+    public class BlameCommand : GitCommand
     {
-        public GitHistoryCommand(IServiceProvider provider)
-            : base(provider, PkgCmdIDList.cmdGitHistory, CommandFlags.Track, "Git &History")
+        public BlameCommand(IServiceProvider provider)
+            : base(provider, PkgCmdIDList.cmdGitBlame, CommandFlags.Track | CommandFlags.File, "Git &Blame")
         {
 
         }
@@ -20,10 +20,12 @@ namespace GitMenu.Commands
             string wd = WDFromPath(file, out isDir);
             string name = "";
             string output;
-            if(!isDir)
+            if (!isDir)
+            {
                 name = file.Substring(wd.Length + 1);
 
-            Exec(wd, true, out output, Settings.Instance.ShPath,  "--login", "-i", "/bin/gitk", "HEAD", "--", name);
+                Exec(wd, true, out output, Settings.Instance.GitPath, "gui", "blame", name);
+            }
         }
     }
 }
