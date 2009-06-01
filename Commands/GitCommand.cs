@@ -24,6 +24,13 @@ namespace GitMenu.Commands
             GitCommand.ServiceProvider = provider;
         }
 
+        public GitCommand(IServiceProvider provider, CommandID id, CommandFlags selection, string text)
+            : base(id, text)
+        {
+            this.Selection = selection;
+            GitCommand.ServiceProvider = provider;
+        }
+
         protected override bool CanExecute()
         {
             if (base.CanExecute())
