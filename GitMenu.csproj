@@ -67,6 +67,7 @@
     <Compile Include="Commands\GitGuiCommand.cs" />
     <Compile Include="Commands\HistoryCommand.cs" />
     <Compile Include="Commands\InitCommand.cs" />
+    <Compile Include="Commands\OpenGitProject.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Guids.cs" />
     <Compile Include="Resources.Designer.cs">
@@ -108,6 +109,7 @@
     <None Include="Resources\GitSmall.png" />
     <None Include="Resources\History.png" />
     <None Include="Resources\Init.png" />
+    <None Include="Resources\Open.png" />
     <Content Include="Resources\Package.ico" />
   </ItemGroup>
   <PropertyGroup>

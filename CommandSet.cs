@@ -26,6 +26,7 @@ namespace GitMenu
             mcs.AddCommand(new Commands.GitBashCommand(this.ServiceProvider));
             mcs.AddCommand(new Commands.GitGuiCommand(this.ServiceProvider));
             mcs.AddCommand(new Commands.HistoryCommand(this.ServiceProvider));
+            mcs.AddCommand(new Commands.OpenGitProject(this.ServiceProvider));
         }
     }
 }

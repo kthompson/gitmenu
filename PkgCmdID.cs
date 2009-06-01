@@ -15,5 +15,6 @@ namespace GitMenu
         public const int cmdGitBlame = 0x1060;
         public const int cmdGitBash = 0x1070;
         public const int cmdGitGui = 0x1080;
+        public const int cmdGitOpenProject = 0x1020;
     };
 }

@@ -46,6 +46,7 @@
     <Groups>
 
       <Group guid="guidGitMenuCmdSet" id="GitMenu" priority="0x0000" />
+      <Group guid="guidGitMenuFileOpen" id="GitMenuFileOpen" priority="0x0000" />
 
     </Groups>
     
@@ -60,6 +61,17 @@
           
           These values for FLAGS can be or'ed together, e.g. "DEFAULTINVISIBLE | DYNAMICVISIBILITY" 
           If you do not want an image next to your command, set the image to "guidOfficeIcon:msotcidNoIcon" -->
+      <Button guid="guidGitMenuFileOpen" id="cmdGitOpenProject" priority="0x0100" type="Button">
+        <Parent guid="guidGitMenuFileOpen" id="GitMenuFileOpen" />
+        <Icon guid="guidGitOpen" id="1" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+
+          <CommandName>cmdGitOpenProject</CommandName>
+          <ButtonText>&amp;Git Project...</ButtonText>
+          <ToolTipText>Open a remote project</ToolTipText>
+        </Strings>
+      </Button>
 
       <Button guid="guidGitMenuCmdSet" id="cmdGitAddAll" priority="0x0100" type="Button">
         <Parent guid="guidGitMenuCmdSet" id="GitMenu" />
@@ -154,10 +166,12 @@
       <Bitmap guid="guidGitCommit" href="Resources\Commit.png" usedList="1"/>
       <Bitmap guid="guidGitDelete" href="Resources\Delete.png" usedList="1"/>
       <Bitmap guid="guidGitHistory" href="Resources\History.png" usedList="1"/>
+      <Bitmap guid="guidGitOpen" href="Resources\Open.png" usedList="1"/>
     </Bitmaps>
  
   </Commands>
   <CommandPlacements>
+    <!-- good refernce for VS menus is at http://msdn.microsoft.com/en-us/library/cc826118.aspx -->
     <CommandPlacement guid="guidGitMenuCmdSet" id="GitMenu" priority="0x0100">
       <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_SOLNNODE" />
     </CommandPlacement>
@@ -169,6 +183,9 @@
     </CommandPlacement>
     <CommandPlacement guid="guidGitMenuCmdSet" id="GitMenu" priority="0x0100">
       <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE" />
+    </CommandPlacement>
+    <CommandPlacement guid="guidGitMenuFileOpen" id="GitMenuFileOpen" priority="0x0100">
+      <Parent guid="guidSHLMainMenu" id="IDM_VS_CSCD_OPEN" />
     </CommandPlacement>
   </CommandPlacements>
   <Symbols>
@@ -187,6 +204,11 @@
       <IDSymbol name="cmdGitGui" value="0x1080"/>
     </GuidSymbol>
 
+    <GuidSymbol name ="guidGitMenuFileOpen" value="{D9580075-D9E3-4bf2-A7A0-3EDD0943519A}">
+      <IDSymbol name="GitMenuFileOpen" value="0x1010"/>
+      <IDSymbol name="cmdGitOpenProject" value="0x1020"/>
+    </GuidSymbol>
+
     <GuidSymbol name ="guidGitImage" value="{22c53c51-e03b-4fa0-b9e2-e7a24cd6c565}"/>
     <GuidSymbol name ="guidGitInit" value="{51FEB195-17AC-44e8-B156-8FD726ECF367}"/>
     <GuidSymbol name ="guidGitAdd" value="{d0ef1a1d-9715-4591-ac4a-6c6f31d86f05}"/>
@@ -194,6 +216,7 @@
     <GuidSymbol name ="guidGitCommit" value="{C710120A-FBAE-4904-A3BF-61E3DC93838F}"/>
     <GuidSymbol name ="guidGitHistory" value="{6B467B92-2FF7-4f17-9210-4B01E0941367}"/>
     <GuidSymbol name ="guidGitDelete" value="{E5B40BB8-2DEF-46bf-93A9-D86188EDF30B}"/>
+    <GuidSymbol name ="guidGitOpen" value="{D5C54B98-AC4F-475f-8A51-4F26CC5117B3}"/>
   </Symbols>
 
 </CommandTable>
