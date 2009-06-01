@@ -131,13 +131,14 @@ namespace GitMenu.Commands
 
         protected static int Exec(string wd, bool hidden, out string output, params string[] args)
         {
+            output = string.Empty;
             var start = new ProcessStartInfo
             {
                 FileName = args.First(),
                 Arguments = string.Join(" ", args.Skip(1).ToArray()),
                 WindowStyle = hidden ? ProcessWindowStyle.Hidden : ProcessWindowStyle.Normal,
                 CreateNoWindow = hidden,
-                RedirectStandardOutput = true,
+                RedirectStandardOutput = hidden,
                 WorkingDirectory = wd,
                 UseShellExecute = false,
             };
@@ -145,10 +146,13 @@ namespace GitMenu.Commands
             {
                 using (var proc = Process.Start(start))
                 {
-                    output = proc.StandardOutput.ReadToEnd();
-                    proc.WaitForExit();
-
-                    return proc.ExitCode;
+                    if (hidden)
+                    {
+                        output = proc.StandardOutput.ReadToEnd();
+                        proc.WaitForExit();
+                        return proc.ExitCode;
+                    }
+                    return 0;
                 }
             }
             catch(Exception ex)
