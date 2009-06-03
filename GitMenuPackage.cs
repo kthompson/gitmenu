@@ -10,6 +10,8 @@ using Microsoft.Win32;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio;
+using GitMenu.Services;
 
 namespace GitMenu
 {
@@ -39,6 +41,8 @@ namespace GitMenu
     // http://msdn.microsoft.com/vstudio/extend/). This attributes tells the shell that this 
     // package has a load key embedded in its resources.
     [ProvideLoadKey("Standard", "1.0", "Package Name", "GitMenu", 1)]
+    [ProvideService(typeof(GitSccProvider), ServiceName = "Git Source Control Provider Service")]
+    [ProvideSourceControlProvider("Git Source Control Provider", "#100")]
     // This attribute is needed to let the shell know that this package exposes some menus.
     [ProvideMenuResource(1000, 1)]
     //Load package right away(UICONTEXT_NoSolution)
@@ -46,6 +50,9 @@ namespace GitMenu
     [Guid(GuidList.guidGitMenuPkgString)]
     public sealed class GitMenuPackage : Package
     {
+
+        public GitSccProvider GitSccProvider { get; private set; }
+
         /// <summary>
         /// Default constructor of the package.
         /// Inside this method you can place any initialization code that does not require 
@@ -72,6 +79,12 @@ namespace GitMenu
         {
             Trace.WriteLine (string.Format(CultureInfo.CurrentCulture, "Entering Initialize() of: {0}", this.ToString()));
             base.Initialize();
+
+            this.GitSccProvider = new GitSccProvider(this);
+            ((IServiceContainer)this).AddService(typeof(GitSccProvider), this.GitSccProvider, true);
+
+            var rscp = this.GetService<IVsRegisterScciProvider>();
+            rscp.RegisterSourceControlProvider(GuidList.guidGitSccProvider);
 
             var commands = new CommandSet(this);
             commands.Initialize();

@@ -59,5 +59,14 @@ namespace GitMenu {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Git Source Control Provider.
+        /// </summary>
+        internal static string _100 {
+            get {
+                return ResourceManager.GetString("100", resourceCulture);
+            }
+        }
     }
 }

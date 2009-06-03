@@ -69,9 +69,11 @@
     <Compile Include="Commands\InitCommand.cs" />
     <Compile Include="Commands\OpenGitProject.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="GitFileState.cs" />
     <Compile Include="GitGlyph.cs" />
     <Compile Include="Guids.cs" />
     <Compile Include="Helper.cs" />
+    <Compile Include="ProvideSourceControlProvider.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -81,6 +83,7 @@
     <Compile Include="GitMenuPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PkgCmdID.cs" />
+    <Compile Include="Services\GitSccProvider.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Singleton.cs" />
     <Compile Include="StatusIcons.cs" />
