@@ -17,14 +17,14 @@ namespace GitMenu.Commands
         {
             string file = GitCommand.GetSelectedPath();
             bool isDir;
-            string wd = WDFromPath(file, out isDir);
+            string wd = Helper.WorkingDirectoryFromPath(file, out isDir);
             string name = "";
             string output;
             if (!isDir)
             {
                 name = file.Substring(wd.Length + 1);
 
-                Exec(wd, true, out output, Settings.Instance.GitPath, "gui", "blame", name);
+                Helper.Exec(wd, true, out output, Settings.Instance.GitPath, "gui", "blame", name);
             }
         }
     }

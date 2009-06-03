@@ -16,8 +16,8 @@ namespace GitMenu.Commands
         protected override void OnExecute()
         {
             string file = GitCommand.GetSelectedPath();
-            string wd = WDFromPath(file);
-            Exec(wd, false, Settings.Instance.ShPath, "--login", "-i");
+            string wd = Helper.WorkingDirectoryFromPath(file);
+            Helper.Exec(wd, false, Settings.Instance.ShPath, "--login", "-i");
         }
     }
 }

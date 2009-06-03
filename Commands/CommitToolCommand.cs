@@ -17,8 +17,8 @@ namespace GitMenu.Commands
         protected override void OnExecute()
         {
             string file = GitCommand.GetSelectedPath();
-            string wd = WDFromPath(file);
-            Exec(wd, true, Settings.Instance.GitPath, "citool");
+            string wd = Helper.WorkingDirectoryFromPath(file);
+            Helper.Exec(wd, true, Settings.Instance.GitPath, "citool");
         }
     }
 }

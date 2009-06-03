@@ -72,37 +72,15 @@ namespace GitMenu.Commands
             return string.Empty;
         }
 
-        public static string WDFromPath(string path)
-        {
-           bool isDirectory;
-           return WDFromPath(path, out isDirectory);
-        }
-
-        /// <summary>
-        /// Gets Working Directory from a path.
-        /// </summary>
-        /// <param name="path">The path to a file or folder.</param>
-        /// <param name="isDirectory">if set to <c>true</c> path is a directory.</param>
-        /// <returns></returns>
-        public static string WDFromPath(string path, out bool isDirectory)
-        {
-            isDirectory = Directory.Exists(path);
-
-            if (!isDirectory)
-                path = path.Substring(0, path.LastIndexOf(Path.DirectorySeparatorChar));
-
-            return path;
-        }
-
         public static CommandFlags GetMenuMask(string path)
         {
             bool isDirectory;
-            var wd = WDFromPath(path, out isDirectory);
+            var wd = Helper.WorkingDirectoryFromPath(path, out isDirectory);
 
             CommandFlags selection = isDirectory ? CommandFlags.Directory : CommandFlags.File;
             string output;
 
-            int status = Exec(wd, true, out output, Settings.Instance.GitPath, "rev-parse","--show-prefix");
+            int status = Helper.Exec(wd, true, out output, Settings.Instance.GitPath, "rev-parse", "--show-prefix");
 
             var eol = output.IndexOf('\n');
             var line = output;
@@ -120,7 +98,7 @@ namespace GitMenu.Commands
                 if (!isDirectory)
                     headPath = string.Format("HEAD:{0}{1}", line, path.Substring(wd.Length + 1));
 
-                status = Exec(wd, true, Settings.Instance.GitPath, "rev-parse", "--verify", headPath);
+                status = Helper.Exec(wd, true, Settings.Instance.GitPath, "rev-parse", "--verify", headPath);
                 if (status < 0)
                     selection = CommandFlags.Last;
                 else
@@ -130,44 +108,7 @@ namespace GitMenu.Commands
             return selection;
         }
 
-        protected static int Exec(string wd, bool hidden, params string[] args)
-        {
-            string output;
-            return Exec(wd, hidden, out output, args);
-        }
-
-        protected static int Exec(string wd, bool hidden, out string output, params string[] args)
-        {
-            output = string.Empty;
-            var start = new ProcessStartInfo
-            {
-                FileName = args.First(),
-                Arguments = string.Join(" ", args.Skip(1).ToArray()),
-                WindowStyle = hidden ? ProcessWindowStyle.Hidden : ProcessWindowStyle.Normal,
-                CreateNoWindow = hidden,
-                RedirectStandardOutput = hidden,
-                WorkingDirectory = wd,
-                UseShellExecute = false,
-            };
-            try
-            {
-                using (var proc = Process.Start(start))
-                {
-                    if (hidden)
-                    {
-                        output = proc.StandardOutput.ReadToEnd();
-                        proc.WaitForExit();
-                        return proc.ExitCode;
-                    }
-                    return 0;
-                }
-            }
-            catch(Exception ex)
-            {
-                Trace.WriteLine(ex.Message);
-                throw;
-            }
-        }
+        
 
         public static bool HasGitRepository(string path)
         {
