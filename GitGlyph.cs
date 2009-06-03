@@ -20,8 +20,8 @@ namespace GitMenu
         STATEICON_CHECKEDOUTEXCLUSIVEOTHER = 10,
         STATEICON_EXCLUDEDFROMSCC = 11,
         Untracked = 12,
-        Modified = 13,
-        Indexed = 14,
-        Normal = 15,
+        Changed = 13,
+        Updated = 14,
+        Commited = 15,
     }
 }

@@ -98,26 +98,24 @@ namespace GitMenu.Services
             return VSConstants.S_OK;
         }
 
-        
-
         #endregion
 
         public GitGlyph GetGlyphFromPath(string path)
         {
-            var file = GitFileState.GetLsFiles(path).FirstOrDefault();
+            var file = GitFileState.GetStatus(path).FirstOrDefault();
             if (file == null)
-                return GitGlyph.None;
+                return GitGlyph.Commited;
 
             if (file.IsUntracked)
                 return GitGlyph.Untracked;
 
-            if (file.IsModified)
-                return GitGlyph.Modified;
+            if (file.IsChanged)
+                return GitGlyph.Changed;
 
-            if (file.IsCached)
-                return GitGlyph.Indexed;
+            if (file.IsUpdated)
+                return GitGlyph.Updated;
 
-            return GitGlyph.Normal;
+            return GitGlyph.None;
 
         }
 
