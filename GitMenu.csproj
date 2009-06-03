@@ -69,6 +69,7 @@
     <Compile Include="Commands\InitCommand.cs" />
     <Compile Include="Commands\OpenGitProject.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="GitGlyph.cs" />
     <Compile Include="Guids.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="Resources.Designer.cs">
@@ -82,6 +83,7 @@
     <Compile Include="PkgCmdID.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Singleton.cs" />
+    <Compile Include="StatusIcons.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">
@@ -112,6 +114,7 @@
     <None Include="Resources\Init.png" />
     <None Include="Resources\Open.png" />
     <Content Include="Resources\Package.ico" />
+    <EmbeddedResource Include="Resources\StatusIcons.bmp" />
   </ItemGroup>
   <PropertyGroup>
     <!--
