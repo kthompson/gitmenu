@@ -21,6 +21,9 @@ namespace GitMenu
 
         public static List<GitFileState> GetStatus(string file)
         {
+            if (file == null)
+                return new List<GitFileState>();
+
             bool isDir;
             string wd = Helper.WorkingDirectoryFromPath(file, out isDir);
             string output;
