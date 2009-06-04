@@ -43,6 +43,8 @@ namespace GitMenu
     [ProvideLoadKey("Standard", "1.0", "Package Name", "GitMenu", 1)]
     [ProvideService(typeof(GitSccProvider), ServiceName = "Git Source Control Provider Service")]
     [ProvideSourceControlProvider("Git Source Control Provider", "#100")]
+    [ProvideOptionPage(typeof(Options), "Git Menu", "General", 101, 106, true)]
+    [ProvideProfile(typeof(Options), "Git Menu", "General",101, 106, true)]
     // This attribute is needed to let the shell know that this package exposes some menus.
     [ProvideMenuResource(1000, 1)]
     //Load package right away(UICONTEXT_NoSolution)
@@ -63,6 +65,7 @@ namespace GitMenu
         public GitMenuPackage()
         {
             Trace.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering constructor for: {0}", this.ToString()));
+            
         }
 
 
@@ -88,6 +91,14 @@ namespace GitMenu
 
             var commands = new CommandSet(this);
             commands.Initialize();
+
+            Settings.Instance.LoadSettings(this);
+        }
+
+        protected override int QueryClose(out bool canClose)
+        {
+            Settings.Instance.SaveSettings(this);
+            return base.QueryClose(out canClose);
         }
         #endregion
     }

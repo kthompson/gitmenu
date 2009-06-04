@@ -73,6 +73,9 @@
     <Compile Include="GitGlyph.cs" />
     <Compile Include="Guids.cs" />
     <Compile Include="Helper.cs" />
+    <Compile Include="Options.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ProvideSourceControlProvider.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
