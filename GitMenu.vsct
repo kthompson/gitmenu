@@ -73,15 +73,14 @@
         </Strings>
       </Button>
 
-      <Button guid="guidGitMenuCmdSet" id="cmdGitAddAll" priority="0x0100" type="Button">
+      <Button guid="guidGitMenuCmdSet" id="cmdGitAdd" priority="0x0100" type="Button">
         <Parent guid="guidGitMenuCmdSet" id="GitMenu" />
         <Icon guid="guidGitAdd" id="1" />
         <CommandFlag>DynamicVisibility</CommandFlag>
         <Strings>
-          
-          <CommandName>cmdGitAddAll</CommandName>
-          <ButtonText>Git &amp;Add all files now</ButtonText>
-          <ToolTipText>Add all files from this folder now</ToolTipText>
+          <CommandName>cmdGitAdd</CommandName>
+          <ButtonText>&amp;Add file now</ButtonText>
+          <ToolTipText>Add selected file now</ToolTipText>
         </Strings>
       </Button>
 
@@ -196,7 +195,7 @@
     <GuidSymbol name="guidGitMenuCmdSet" value="{6f99f062-a97e-4e28-88ef-5413ad15229a}">
       <IDSymbol name="cmdGitCommitTool" value="0x1010" />
       <IDSymbol name="GitMenu" value="0x1020" />
-      <IDSymbol name="cmdGitAddAll" value="0x1030"/>
+      <IDSymbol name="cmdGitAdd" value="0x1030"/>
       <IDSymbol name="cmdGitInit" value="0x1040"/>
       <IDSymbol name="cmdGitHistory" value="0x1050"/>
       <IDSymbol name="cmdGitBlame" value="0x1060"/>

@@ -58,7 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandSet.cs" />
-    <Compile Include="Commands\AddAllCommand.cs" />
+    <Compile Include="Commands\AddCommand.cs" />
     <Compile Include="Commands\BaseCommand.cs" />
     <Compile Include="Commands\BlameCommand.cs" />
     <Compile Include="Commands\CommitToolCommand.cs" />

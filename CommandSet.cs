@@ -19,7 +19,7 @@ namespace GitMenu
         public void Initialize()
         {
             var mcs = this.ServiceProvider.GetService<IMenuCommandService, OleMenuCommandService>();
-            mcs.AddCommand(new Commands.AddAllCommand(this.ServiceProvider));
+            mcs.AddCommand(new Commands.AddCommand(this.ServiceProvider));
             mcs.AddCommand(new Commands.CommitToolCommand(this.ServiceProvider));
             mcs.AddCommand(new Commands.InitCommand(this.ServiceProvider));
             mcs.AddCommand(new Commands.BlameCommand(this.ServiceProvider));
