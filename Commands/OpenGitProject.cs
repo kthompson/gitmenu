@@ -8,7 +8,7 @@ namespace GitMenu.Commands
 {
     public class OpenGitProject : GitCommand
     {
-        public OpenGitProject(IServiceProvider provider)
+        public OpenGitProject(GitMenuPackage provider)
             : base(provider, new CommandID(GuidList.guidGitMenuFileOpen, PkgCmdIDList.cmdGitOpenProject), CommandFlags.NoRepository, "&Git Project...")
         {
             

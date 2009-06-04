@@ -7,7 +7,7 @@ namespace GitMenu.Commands
 {
     public class HistoryCommand : GitCommand
     {
-        public HistoryCommand(IServiceProvider provider)
+        public HistoryCommand(GitMenuPackage provider)
             : base(provider, PkgCmdIDList.cmdGitHistory, CommandFlags.Track, "Git &History")
         {
 

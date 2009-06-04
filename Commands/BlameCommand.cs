@@ -7,7 +7,7 @@ namespace GitMenu.Commands
 {
     public class BlameCommand : GitCommand
     {
-        public BlameCommand(IServiceProvider provider)
+        public BlameCommand(GitMenuPackage provider)
             : base(provider, PkgCmdIDList.cmdGitBlame, CommandFlags.Track | CommandFlags.File, "Git &Blame")
         {
 

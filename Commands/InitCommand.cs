@@ -8,7 +8,7 @@ namespace GitMenu.Commands
 {
     public class InitCommand : GitCommand
     {
-        public InitCommand(IServiceProvider provider)
+        public InitCommand(GitMenuPackage provider)
             : base(provider, PkgCmdIDList.cmdGitInit, CommandFlags.NoRepository, "Git I&nit Here")
         {
         }

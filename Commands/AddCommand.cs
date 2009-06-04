@@ -9,7 +9,7 @@ namespace GitMenu.Commands
 {
     public class AddCommand : GitCommand
     {
-        public AddCommand(IServiceProvider provider)
+        public AddCommand(GitMenuPackage provider)
             : base(provider, PkgCmdIDList.cmdGitAdd, CommandFlags.Repository, "&Add file now")
         {
             

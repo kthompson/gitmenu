@@ -17,18 +17,18 @@ namespace GitMenu.Commands
     {
         public CommandFlags Selection { get; private set; }
 
-        public GitCommand(IServiceProvider provider, int id, CommandFlags selection, string text)
+        public GitCommand(GitMenuPackage provider, int id, CommandFlags selection, string text)
             : base(new CommandID(GuidList.guidGitMenuCmdSet, id), text)
         {
             this.Selection = selection;
-            GitCommand.ServiceProvider = provider;
+            GitCommand.Package = provider;
         }
 
-        public GitCommand(IServiceProvider provider, CommandID id, CommandFlags selection, string text)
+        public GitCommand(GitMenuPackage provider, CommandID id, CommandFlags selection, string text)
             : base(id, text)
         {
             this.Selection = selection;
-            GitCommand.ServiceProvider = provider;
+            GitCommand.Package = provider;
         }
 
         protected override bool CanExecute()
@@ -157,7 +157,7 @@ namespace GitMenu.Commands
             }
         }
 
-        public static IServiceProvider ServiceProvider { get; private set; }
+        public static GitMenuPackage Package { get; private set; }
 
         private static DTE dte;
         protected static DTE Dte
@@ -165,7 +165,7 @@ namespace GitMenu.Commands
             get
             {
                 if (dte == null)
-                    dte = ServiceProvider.GetService<DTE>();
+                    dte = Package.GetService<DTE>();
 
                 return dte;
             }
@@ -177,7 +177,7 @@ namespace GitMenu.Commands
             get
             {
                 if (gitMenuPackage == null)
-                    gitMenuPackage = ServiceProvider.GetService<GitMenuPackage>();
+                    gitMenuPackage = Package.GetService<GitMenuPackage>();
 
                 return gitMenuPackage;
             }

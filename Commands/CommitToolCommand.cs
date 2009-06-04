@@ -8,7 +8,7 @@ namespace GitMenu.Commands
 {
     public class CommitToolCommand : GitCommand
     {
-        public CommitToolCommand(IServiceProvider provider)
+        public CommitToolCommand(GitMenuPackage provider)
             : base(provider, PkgCmdIDList.cmdGitCommitTool, CommandFlags.Repository, "Git &Commit Tool")
         {
 

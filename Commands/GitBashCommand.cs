@@ -7,7 +7,7 @@ namespace GitMenu.Commands
 {
     public class GitBashCommand : GitCommand
     {
-        public GitBashCommand(IServiceProvider provider)
+        public GitBashCommand(GitMenuPackage provider)
             : base(provider, PkgCmdIDList.cmdGitBash, CommandFlags.Always, "Git Ba&sh")
         {
 

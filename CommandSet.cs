@@ -9,24 +9,24 @@ namespace GitMenu
 {
     public class CommandSet
     {
-        public IServiceProvider ServiceProvider { get; private set; }
+        public GitMenuPackage Package { get; private set; }
 
-        public CommandSet(IServiceProvider provider)
+        public CommandSet(GitMenuPackage provider)
         {
-            this.ServiceProvider = provider;
+            this.Package = provider;
         }
 
         public void Initialize()
         {
-            var mcs = this.ServiceProvider.GetService<IMenuCommandService, OleMenuCommandService>();
-            mcs.AddCommand(new Commands.AddCommand(this.ServiceProvider));
-            mcs.AddCommand(new Commands.CommitToolCommand(this.ServiceProvider));
-            mcs.AddCommand(new Commands.InitCommand(this.ServiceProvider));
-            mcs.AddCommand(new Commands.BlameCommand(this.ServiceProvider));
-            mcs.AddCommand(new Commands.GitBashCommand(this.ServiceProvider));
-            mcs.AddCommand(new Commands.GitGuiCommand(this.ServiceProvider));
-            mcs.AddCommand(new Commands.HistoryCommand(this.ServiceProvider));
-            mcs.AddCommand(new Commands.OpenGitProject(this.ServiceProvider));
+            var mcs = this.Package.GetService<IMenuCommandService, OleMenuCommandService>();
+            mcs.AddCommand(new Commands.AddCommand(this.Package));
+            mcs.AddCommand(new Commands.CommitToolCommand(this.Package));
+            mcs.AddCommand(new Commands.InitCommand(this.Package));
+            mcs.AddCommand(new Commands.BlameCommand(this.Package));
+            mcs.AddCommand(new Commands.GitBashCommand(this.Package));
+            mcs.AddCommand(new Commands.GitGuiCommand(this.Package));
+            mcs.AddCommand(new Commands.HistoryCommand(this.Package));
+            mcs.AddCommand(new Commands.OpenGitProject(this.Package));
         }
     }
 }

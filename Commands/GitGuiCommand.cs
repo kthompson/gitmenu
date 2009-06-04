@@ -7,7 +7,7 @@ namespace GitMenu.Commands
 {
     public class GitGuiCommand : GitCommand
     {
-        public GitGuiCommand(IServiceProvider provider)
+        public GitGuiCommand(GitMenuPackage provider)
             : base(provider, PkgCmdIDList.cmdGitGui, CommandFlags.Always, "Git &Gui")
         {
         }
