@@ -40,7 +40,7 @@ namespace GitMenu
     // package needs to have a valid load key (it can be requested at 
     // http://msdn.microsoft.com/vstudio/extend/). This attributes tells the shell that this 
     // package has a load key embedded in its resources.
-    [ProvideLoadKey("Standard", "1.0", "Package Name", "GitMenu", 1)]
+    [ProvideLoadKey("Standard", "1.0", "Git Menu", "GitMenu", 1)]
     [ProvideService(typeof(GitSccProvider), ServiceName = "Git Source Control Provider Service")]
     [ProvideSourceControlProvider("Git Source Control Provider", "#100")]
     [ProvideOptionPage(typeof(Options), "Git Menu", "General", 101, 106, true)]
