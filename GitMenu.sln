@@ -3,16 +3,38 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitMenu", "GitMenu.csproj", "{C5B00EBF-4014-4C74-91DA-F825BAA1ABD1}"
 EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "GitMenu.Installer", "GitMenu.Installer\GitMenu.Installer.wixproj", "{ED22A2E2-DEDA-4ACB-AB48-A054FEEC78EC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C5B00EBF-4014-4C74-91DA-F825BAA1ABD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C5B00EBF-4014-4C74-91DA-F825BAA1ABD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5B00EBF-4014-4C74-91DA-F825BAA1ABD1}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C5B00EBF-4014-4C74-91DA-F825BAA1ABD1}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C5B00EBF-4014-4C74-91DA-F825BAA1ABD1}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{C5B00EBF-4014-4C74-91DA-F825BAA1ABD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5B00EBF-4014-4C74-91DA-F825BAA1ABD1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5B00EBF-4014-4C74-91DA-F825BAA1ABD1}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C5B00EBF-4014-4C74-91DA-F825BAA1ABD1}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{C5B00EBF-4014-4C74-91DA-F825BAA1ABD1}.Release|x86.ActiveCfg = Release|Any CPU
+		{ED22A2E2-DEDA-4ACB-AB48-A054FEEC78EC}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{ED22A2E2-DEDA-4ACB-AB48-A054FEEC78EC}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{ED22A2E2-DEDA-4ACB-AB48-A054FEEC78EC}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{ED22A2E2-DEDA-4ACB-AB48-A054FEEC78EC}.Debug|x86.ActiveCfg = Debug|x86
+		{ED22A2E2-DEDA-4ACB-AB48-A054FEEC78EC}.Debug|x86.Build.0 = Debug|x86
+		{ED22A2E2-DEDA-4ACB-AB48-A054FEEC78EC}.Release|Any CPU.ActiveCfg = Release|x86
+		{ED22A2E2-DEDA-4ACB-AB48-A054FEEC78EC}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{ED22A2E2-DEDA-4ACB-AB48-A054FEEC78EC}.Release|Mixed Platforms.Build.0 = Release|x86
+		{ED22A2E2-DEDA-4ACB-AB48-A054FEEC78EC}.Release|x86.ActiveCfg = Release|x86
+		{ED22A2E2-DEDA-4ACB-AB48-A054FEEC78EC}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="2ad9e62f-0ec8-425f-b3c3-8dc93235743b" Name="Git Menu - Visual Studio Addin" Language="1033" Version="1.0.0.0" Manufacturer="Git Menu" UpgradeCode="6eda8d8c-b1f7-43f9-b07a-8118562c1088">
+		<Package InstallerVersion="200" Compressed="yes" />
+    <Condition Message="You need to be an administrator to install this product">
+      Privileged
+    </Condition>
+    <Condition Message="This application requires .NET Framework 3.5. Please install the .NET Framework then run this installer again.">
+      <![CDATA[Installed OR NETFRAMEWORK35]]>
+    </Condition>
+
+		<Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
+
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLLOCATION" Name="GitMenu">
+					<Component Id="Main" Guid="3c262bc3-47c9-47ac-b5fb-e8cb7e580aa6">
+            <File Id="File_git_menu.dll" Name="$(var.GitMenu.TargetFileName)" DiskId="1" Vital="yes" Source="$(var.GitMenu.TargetPath)" KeyPath="yes"/>
+            <?include registration.wxi?>
+            <!--
+            <RegistryKey Root="HKLM" Key="Software\Microsoft\VisualStudio\9.0\InstalledProducts\GitMenuPackage" Action="createAndRemoveOnUninstall">
+              <RegistryValue Type="string" Value="#110"/>
+              <RegistryValue Name="Package" Value="{9ac2f8ae-1b97-4093-b322-a8e5e6fb54fb}" Type="string" />
+              <RegistryValue Name="ProductDetails" Value="#112" Type="string" />
+              <RegistryValue Name="PID" Value="1.0" Type="string" />
+              <RegistryValue Name="LogoID" Value="#400" Type="string" />
+            </RegistryKey>
+
+            <RegistryKey Root="HKLM" Key="Software\Microsoft\VisualStudio\9.0\Packages\{9ac2f8ae-1b97-4093-b322-a8e5e6fb54fb}" Action="createAndRemoveOnUninstall">
+              <RegistryValue Value="GitMenu.GitMenuPackage, git_menu, Version=0.1.0.0, Culture=neutral, PublicKeyToken=5b45f81c8e8d5ddb" Type="string"/>
+              <RegistryValue Name="InprocServer32" Value="[SystemFolder]mscoree.dll" Type="string" />
+              <RegistryValue Name="Class" Value="GitMenu.GitMenuPackage" Type="string" />
+              <RegistryValue Name="CodeBase" Value="[INSTALLLOCATION]git_menu.dll" Type="string" />
+              <RegistryValue Name="ID" Value="1" Type="integer" />
+              <RegistryValue Name="MinEdition" Value="Standard" Type="string" />
+              <RegistryValue Name="ProductVersion" Value="0." Type="string" />
+              <RegistryValue Name="ProductName" Value="Package Name" Type="string" />
+              <RegistryValue Name="CompanyName" Value="GitMenu" Type="string" />
+            </RegistryKey>
+
+            <RegistryKey Root="HKLM" Key="Software\Microsoft\VisualStudio\9.0\AutoLoadPackages\{adfc4e64-0397-11d1-9f4e-00a0c911004f}">
+              <RegistryValue Name="{9ac2f8ae-1b97-4093-b322-a8e5e6fb54fb}" Value="0" Type="integer"/>
+            </RegistryKey>
+            
+            <RegistryKey Root="HKLM" Key="Software\Microsoft\VisualStudio\9.0\Menus">
+              <RegistryValue Name="{9ac2f8ae-1b97-4093-b322-a8e5e6fb54fb}" Value=", 1000, 1" Type="string" />
+            </RegistryKey>
+            -->
+            
+            
+					</Component>
+          <Component Id="PDB" Guid="4C9A6863-D960-46ea-90B1-A905D873D697">
+            <File Id="GITMENUPDB" Name="$(var.GitMenu.TargetName).pdb" DiskId="1" Vital="yes" Source="$(var.GitMenu.TargetDir)$(var.GitMenu.TargetName).pdb"/>
+          </Component>
+				</Directory>
+			</Directory>
+		</Directory>
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION"/>
+    
+    <Feature Id="Complete" Title="GitMenu"  Level="1">
+			<ComponentRef Id="Main" />
+      <ComponentRef Id="PDB"/>
+		</Feature>
+    
+    <UIRef Id="WixUI_InstallDir"/>
+
+    <Icon Id="Icon" SourceFile="..\Resources\GitSmall.png"/>
+    <Property Id="ARPPRODUCTICON" Value="Icon" />
+    <PropertyRef Id="NETFRAMEWORK35"/>
+
+    <WixVariable Id="WixUILicenseRtf" Value="license.rtf" />
+
+  </Product>
+</Wix>

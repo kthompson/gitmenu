@@ -137,7 +137,15 @@
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
-  <Target Name="AfterBuild">
-  </Target>
   -->
+  <Target Name="AfterBuild">
+    <RegPkg ItemToRegister="$(TargetPath)" ProductVersion="$(TargetVSVersion)" SDKVersion="$(VsSDKVersion)" Unregister="false" UseCodebase="true" UseRanu="false" UseVS2005MPF="$(__InternalUseMPF80)" OutputFile="$(TargetDir)$(TargetName).wix" />
+    <CopyIfChanged SourceFile="$(TargetDir)$(TargetName).wix" DestinationFile="$(ProjectDir)GitMenu.Installer\registration.wxi"/>
+  </Target>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
 </Project>
