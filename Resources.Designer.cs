@@ -61,6 +61,15 @@ namespace GitMenu {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to QIADA8KZHTQMHQEAKHQ9JJIIA3H9CHAEA8C1Q8IRDTPRATMJI2R0J9IQQAP3C1ZEZ1K2ACH0K8I0M3QEAMM2RIQAMTMIAMKZIMI8IJH8D3RHJJE2MEDMQKHZE2D0HZDT.
+        /// </summary>
+        internal static string _1 {
+            get {
+                return ResourceManager.GetString("1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Git Source Control Provider.
         /// </summary>
         internal static string _100 {
