@@ -69,7 +69,8 @@ namespace GitMenu.Commands
             if (item2 != null)
                 return Directory.GetParent(item2.FileName).FullName;
 
-            return string.Empty;
+            var solution = GitCommand.GitMenuPackage.GitSccProvider.GetSolutionFileName();
+            return solution;
         }
 
         public static CommandFlags GetMenuMask(string path)
