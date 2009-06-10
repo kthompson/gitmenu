@@ -69,5 +69,46 @@ namespace GitMenu
 
             return path;
         }
+
+        public static string FindGitDirectory(string path)
+        {
+            if (File.Exists(path))
+                return FindGitDirectory(new FileInfo(path));
+            else if (Directory.Exists(path))
+                return FindGitDirectory(new DirectoryInfo(path));
+            else 
+                return null;
+        }
+
+        public static string FindGitDirectory(FileInfo path)
+        {
+            return FindGitDirectory(path.Directory);
+        }
+
+        public static string FindGitDirectory(DirectoryInfo path)
+        {
+            if (path == null)
+                return null;
+
+            var dirs = path.GetDirectories(".git");
+            if (dirs.Length > 0)
+                return dirs.First().FullName;
+
+            return FindGitDirectory(path.Parent);
+        }
+
+        public static string CleanupPath(string fullPath)
+        {
+            return fullPath
+                .Split(System.IO.Path.DirectorySeparatorChar, System.IO.Path.AltDirectorySeparatorChar)
+                .Aggregate(string.Empty,
+                    (accum, element) =>
+                    {
+                        if (string.IsNullOrEmpty(accum))
+                            return element + System.IO.Path.DirectorySeparatorChar;
+                        return System.IO.Directory.GetFileSystemEntries(accum, element).First();
+                    }
+                    );
+        }
     }
 }

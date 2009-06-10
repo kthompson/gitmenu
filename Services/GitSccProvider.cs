@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using EnvDTE;
 using System.Collections;
 using Microsoft.VisualStudio.OLE.Interop;
+using System.IO;
 
 namespace GitMenu.Services
 {
@@ -60,7 +61,9 @@ namespace GitMenu.Services
         public int AnyItemsUnderSourceControl(out int pfResult)
         {
             // Set pfResult to false when the solution can change to an other scc provider
-            pfResult = 1;
+            string git = Helper.FindGitDirectory(GetSolutionFileName());
+            this.Active = (git != null);
+            pfResult = this.Active ? 1 : 0;
             return VSConstants.S_OK;
         }
 
@@ -103,7 +106,8 @@ namespace GitMenu.Services
 
         public int GetSccGlyph(int cFiles, string[] rgpszFullPaths, VsStateIcon[] rgsiGlyphs, uint[] rgdwSccStatus)
         {
-            rgsiGlyphs[0] = (VsStateIcon)GetGlyphFromPath(rgpszFullPaths[0]);
+            var path = Helper.CleanupPath(rgpszFullPaths[0]);
+            rgsiGlyphs[0] = (VsStateIcon)GetGlyphFromPath(path);
             rgdwSccStatus[0] = (uint)SccStatus.SCC_STATUS_CONTROLLED;
             return VSConstants.S_OK;
         }
@@ -133,9 +137,14 @@ namespace GitMenu.Services
 
         public GitGlyph GetGlyphFromPath(string path)
         {
-            var file = GitFileState.GetStatus(path).FirstOrDefault();
+            var file = GitFileStateCache.Instance.GetStatus(path);
+            return GetGlyphFromPath(file);
+        }
+
+        private GitGlyph GetGlyphFromPath(GitFileState file)
+        {
             if (file == null)
-                return GitGlyph.Commited;
+                return GitGlyph.None;
 
             if (file.IsUntracked)
                 return GitGlyph.Untracked;
@@ -146,8 +155,7 @@ namespace GitMenu.Services
             if (file.IsUpdated)
                 return GitGlyph.Updated;
 
-            return GitGlyph.None;
-
+            return GitGlyph.Commited;
         }
 
         #region IVsSccGlyphs Members
@@ -393,17 +401,23 @@ namespace GitMenu.Services
 
         public void RefreshAllGlyphs()
         {
-            var items = this.GetAllItems(null);
-            this.RefreshGlyphs(items);
+            string wd = Helper.WorkingDirectoryFromPath(GetSolutionFileName());
+            GitFileStateCache.Instance.GetStatus(wd);
+            using (GitFileStateCache.Instance.LockUpdates())
+            {
+                var items = this.GetAllItems(null);
+                this.RefreshGlyphs(items);
+            }
         }
 
         public void RefreshGlyphs(List<string> names)
         {
+            var lowerNames = names.Select(name => name.ToLower());
             Func<VSITEMSELECTION, bool> where = delegate(VSITEMSELECTION item)
             {
                 string name;
                 item.pHier.GetCanonicalName(item.itemid, out name);
-                return names.Contains(name);
+                return lowerNames.Contains(name);
             };
             var items = this.GetAllItems(where);
             this.RefreshGlyphs(items);

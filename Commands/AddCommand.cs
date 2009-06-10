@@ -34,7 +34,7 @@ namespace GitMenu.Commands
         private static void AddItem(EnvDTE.Project item, List<string> names)
         {
             var file = item.FileName;
-            names.Add(file.ToLower());
+            names.Add(file);
             string wd = Helper.WorkingDirectoryFromPath(file);
             string name = file.Substring(wd.Length + 1);
             Helper.Exec(wd, true, Settings.Instance.GitPath, "add", name);            
@@ -43,7 +43,7 @@ namespace GitMenu.Commands
         private static void AddItem(EnvDTE.ProjectItem item, List<string> names)
         {
             var file = item.GetFullPath();
-            names.Add(file.ToLower());
+            names.Add(file);
             string wd = Helper.WorkingDirectoryFromPath(file);
             string name = file.Substring(wd.Length + 1);
             Helper.Exec(wd, true, Settings.Instance.GitPath, "add", name);

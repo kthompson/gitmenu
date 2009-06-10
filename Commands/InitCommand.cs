@@ -18,6 +18,7 @@ namespace GitMenu.Commands
             string file = GitCommand.GetSelectedPath();
             string wd = Helper.WorkingDirectoryFromPath(file);
             Helper.Exec(wd, true, Settings.Instance.GitPath, "init");
+            GitCommand.Package.GitSccProvider.RefreshAllGlyphs();
         }
     }
 }
