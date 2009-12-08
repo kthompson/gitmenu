@@ -14,9 +14,9 @@ namespace GitMenu
             return (T)provider.GetService(typeof(T));
         }
 
-        public static T GetService<S, T>(this IServiceProvider provider)
+        public static T GetService<TService, T>(this IServiceProvider provider)
         {
-            return (T)provider.GetService(typeof(S));
+            return (T)provider.GetService(typeof(TService));
         }
 
         public static Property GetPropertyByName(this Properties props, string propName)

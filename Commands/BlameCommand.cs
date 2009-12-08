@@ -8,24 +8,21 @@ namespace GitMenu.Commands
     public class BlameCommand : GitCommand
     {
         public BlameCommand(GitMenuPackage provider)
-            : base(provider, PkgCmdIDList.cmdGitBlame, CommandFlags.Track | CommandFlags.File, "Git &Blame")
+            : base(provider, PkgCmdIdList.CmdGitBlame, CommandFlags.Track | CommandFlags.File, "Git &Blame")
         {
 
         }
 
         protected override void OnExecute()
         {
-            string file = GitCommand.GetSelectedPath();
+            var file = GetSelectedPath();
             bool isDir;
-            string wd = Helper.WorkingDirectoryFromPath(file, out isDir);
-            string name = "";
+            var wd = Helper.WorkingDirectoryFromPath(file, out isDir);
             string output;
-            if (!isDir)
-            {
-                name = file.Substring(wd.Length + 1);
-
-                Helper.Exec(wd, true, out output, Settings.Instance.GitPath, "gui", "blame", name);
-            }
+            
+            if (isDir) return;
+            var name = file.Substring(wd.Length + 1);
+            Helper.Exec(wd, true, out output, Settings.Instance.GitPath, "gui", "blame", name);
         }
     }
 }

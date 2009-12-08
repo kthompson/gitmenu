@@ -19,27 +19,27 @@ namespace GitMenu.Services
     /// </summary>
     enum SccStatus
     {
-        SCC_STATUS_INVALID = -1,
-        SCC_STATUS_NOTCONTROLLED = 0x0000,
-        SCC_STATUS_CONTROLLED = 0x0001,
-        SCC_STATUS_CHECKEDOUT = 0x0002,
-        SCC_STATUS_OUTOTHER = 0x0004,
-        SCC_STATUS_OUTEXCLUSIVE = 0x0008,
-        SCC_STATUS_OUTMULTIPLE = 0x0010,
-        SCC_STATUS_OUTOFDATE = 0x0020,
-        SCC_STATUS_DELETED = 0x0040,
-        SCC_STATUS_LOCKED = 0x0080,
-        SCC_STATUS_MERGED = 0x0100,
-        SCC_STATUS_SHARED = 0x0200,
-        SCC_STATUS_PINNED = 0x0400,
-        SCC_STATUS_MODIFIED = 0x0800,
-        SCC_STATUS_OUTBYUSER = 0x1000,
-        SCC_STATUS_NOMERGE = 0x2000,
-        SCC_STATUS_RESERVED_1 = 0x4000,
-        SCC_STATUS_RESERVED_2 = 0x8000
+        SccStatusInvalid = -1,
+        SccStatusNotcontrolled = 0x0000,
+        SccStatusControlled = 0x0001,
+        SccStatusCheckedout = 0x0002,
+        SccStatusOutother = 0x0004,
+        SccStatusOutexclusive = 0x0008,
+        SccStatusOutmultiple = 0x0010,
+        SccStatusOutofdate = 0x0020,
+        SccStatusDeleted = 0x0040,
+        SccStatusLocked = 0x0080,
+        SccStatusMerged = 0x0100,
+        SccStatusShared = 0x0200,
+        SccStatusPinned = 0x0400,
+        SccStatusModified = 0x0800,
+        SccStatusOutbyuser = 0x1000,
+        SccStatusNomerge = 0x2000,
+        SccStatusReserved1 = 0x4000,
+        SccStatusReserved2 = 0x8000
     }
 
-    [Guid(GuidList.guidGitSccProviderString)]
+    [Guid(GuidList.GuidGitSccProviderString)]
     public class GitSccProvider : 
         IVsSccProvider,
         IVsSccManager2,
@@ -104,7 +104,7 @@ namespace GitMenu.Services
         public int GetSccGlyph(int cFiles, string[] rgpszFullPaths, VsStateIcon[] rgsiGlyphs, uint[] rgdwSccStatus)
         {
             rgsiGlyphs[0] = (VsStateIcon)GetGlyphFromPath(rgpszFullPaths[0]);
-            rgdwSccStatus[0] = (uint)SccStatus.SCC_STATUS_CONTROLLED;
+            rgdwSccStatus[0] = (uint)SccStatus.SccStatusControlled;
             return VSConstants.S_OK;
         }
 
@@ -154,11 +154,11 @@ namespace GitMenu.Services
 
         uint _baseIndex;
         ImageList _glyphList;
-        public int GetCustomGlyphList(uint BaseIndex, out uint pdwImageListHandle)
+        public int GetCustomGlyphList(uint baseIndex, out uint pdwImageListHandle)
         {
             try
             {
-                if (_glyphList != null && BaseIndex != _baseIndex)
+                if (_glyphList != null && baseIndex != _baseIndex)
                 {
                     _glyphList.Dispose();
                     _glyphList = null;
@@ -167,9 +167,9 @@ namespace GitMenu.Services
                 // We give VS all our custom glyphs from baseindex upwards
                 if (_glyphList == null)
                 {
-                    _baseIndex = BaseIndex;
+                    _baseIndex = baseIndex;
                     _glyphList = StatusIcons.CreateStatusImageList();
-                    for (int i = (int)BaseIndex - 1; i >= 0; i--)
+                    for (int i = (int)baseIndex - 1; i >= 0; i--)
                     {
                         _glyphList.Images.RemoveAt(i);
                     }
@@ -178,7 +178,7 @@ namespace GitMenu.Services
 
                 return VSConstants.S_OK;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 pdwImageListHandle = 0;
                 return VSConstants.S_FALSE;
@@ -274,7 +274,7 @@ namespace GitMenu.Services
                     ((visibleNodesOnly || (hierIsSolution && recursionLevel == 1) ?
                         (int)__VSHPROPID.VSHPROPID_FirstVisibleChild : (int)__VSHPROPID.VSHPROPID_FirstChild)),
                     out pVar);
-                Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(hr);
+                ErrorHandler.ThrowOnFailure(hr);
                 if (VSConstants.S_OK == hr)
                 {
                     //We are using Depth first search so at each level we recurse to check if the node has any children
@@ -301,7 +301,7 @@ namespace GitMenu.Services
                         }
                         else
                         {
-                            Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(hr);
+                            ErrorHandler.ThrowOnFailure(hr);
                             break;
                         }
                     }
@@ -320,7 +320,7 @@ namespace GitMenu.Services
             if (pvar is int) return (uint)(int)pvar;
             if (pvar is uint) return (uint)pvar;
             if (pvar is short) return (uint)(short)pvar;
-            if (pvar is ushort) return (uint)(ushort)pvar;
+            if (pvar is ushort) return (ushort)pvar;
             if (pvar is long) return (uint)(long)pvar;
             return VSConstants.VSITEMID_NIL;
         }
@@ -330,16 +330,13 @@ namespace GitMenu.Services
         /// </summary>
         public string GetSolutionFileName()
         {
-            IVsSolution sol = (IVsSolution)this.Package.GetService<SVsSolution>();
+            var sol = (IVsSolution)this.Package.GetService<SVsSolution>();
             string solutionDirectory, solutionFile, solutionUserOptions;
             if (sol.GetSolutionInfo(out solutionDirectory, out solutionFile, out solutionUserOptions) == VSConstants.S_OK)
             {
                 return solutionFile;
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
 
         /// <summary>
@@ -349,7 +346,7 @@ namespace GitMenu.Services
         {
             foreach (VSITEMSELECTION vsItemSel in selectedNodes)
             {
-                IVsSccProject2 sccProject2 = vsItemSel.pHier as IVsSccProject2;
+                var sccProject2 = vsItemSel.pHier as IVsSccProject2;
                 if (vsItemSel.itemid == VSConstants.VSITEMID_ROOT)
                 {
                     if (sccProject2 == null)
@@ -361,13 +358,13 @@ namespace GitMenu.Services
                         // This approach could unify the treatment of solution and projects in the provider's code.
 
                         // Until then, solution is treated as special case
-                        var rgpszFullPaths = new string[] { GetSolutionFileName() };
+                        var rgpszFullPaths = new[] { GetSolutionFileName() };
                         var rgsiGlyphs = new VsStateIcon[1];
                         var rgdwSccStatus = new uint[1];
                         this.GetSccGlyph(1, rgpszFullPaths, rgsiGlyphs, rgdwSccStatus);
 
                         // Set the solution's glyph directly in the hierarchy
-                        IVsHierarchy solHier = (IVsHierarchy)this.Package.GetService<SVsSolution>();
+                        var solHier = (IVsHierarchy)this.Package.GetService<SVsSolution>();
                         solHier.SetProperty(VSConstants.VSITEMID_ROOT, (int)__VSHPROPID.VSHPROPID_StateIconIndex, rgsiGlyphs[0]);
                     }
                     else
@@ -443,15 +440,15 @@ namespace GitMenu.Services
             IList<string> sccFiles = new List<string>();
             if (pscp2 != null)
             {
-                CALPOLESTR[] pathStr = new CALPOLESTR[1];
-                CADWORD[] flags = new CADWORD[1];
+                var pathStr = new CALPOLESTR[1];
+                var flags = new CADWORD[1];
 
                 if (pscp2.GetSccFiles(itemid, pathStr, flags) == 0)
                 {
                     for (int elemIndex = 0; elemIndex < pathStr[0].cElems; elemIndex++)
                     {
-                        IntPtr pathIntPtr = Marshal.ReadIntPtr(pathStr[0].pElems, elemIndex);
-                        String path = Marshal.PtrToStringAuto(pathIntPtr);
+                        var pathIntPtr = Marshal.ReadIntPtr(pathStr[0].pElems, elemIndex);
+                        var path = Marshal.PtrToStringAuto(pathIntPtr);
 
                         sccFiles.Add(path);
 
@@ -463,8 +460,8 @@ namespace GitMenu.Services
                             if (flag != 0)
                             {
                                 // We have special files
-                                CALPOLESTR[] specialFiles = new CALPOLESTR[1];
-                                CADWORD[] specialFlags = new CADWORD[1];
+                                var specialFiles = new CALPOLESTR[1];
+                                var specialFlags = new CADWORD[1];
 
                                 pscp2.GetSccSpecialFiles(itemid, path, specialFiles, specialFlags);
                                 for (int i = 0; i < specialFiles[0].cElems; i++)

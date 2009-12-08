@@ -49,7 +49,7 @@ namespace GitMenu
     [ProvideMenuResource(1000, 1)]
     //Load package right away(UICONTEXT_NoSolution)
     [ProvideAutoLoad("{ADFC4E64-0397-11D1-9F4E-00A0C911004F}")]
-    [Guid(GuidList.guidGitMenuPkgString)]
+    [Guid(GuidList.GuidGitMenuPkgString)]
     public sealed class GitMenuPackage : Package
     {
 
@@ -64,7 +64,7 @@ namespace GitMenu
         /// </summary>
         public GitMenuPackage()
         {
-            Trace.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering constructor for: {0}", this.ToString()));
+            Trace.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering constructor for: {0}", this));
             
         }
 
@@ -80,14 +80,14 @@ namespace GitMenu
         /// </summary>
         protected override void Initialize()
         {
-            Trace.WriteLine (string.Format(CultureInfo.CurrentCulture, "Entering Initialize() of: {0}", this.ToString()));
+            Trace.WriteLine (string.Format(CultureInfo.CurrentCulture, "Entering Initialize() of: {0}", this));
             base.Initialize();
 
             this.GitSccProvider = new GitSccProvider(this);
             ((IServiceContainer)this).AddService(typeof(GitSccProvider), this.GitSccProvider, true);
 
             var rscp = this.GetService<IVsRegisterScciProvider>();
-            rscp.RegisterSourceControlProvider(GuidList.guidGitSccProvider);
+            rscp.RegisterSourceControlProvider(GuidList.GuidGitSccProvider);
 
             var commands = new CommandSet(this);
             commands.Initialize();

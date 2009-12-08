@@ -9,22 +9,24 @@ namespace GitMenu.Commands
 {
     public abstract class BaseCommand : OleMenuCommand
     {
-
-        public BaseCommand(CommandID id, string text)
+        protected BaseCommand(CommandID id, string text)
             : base(OnExecute, id)
         {
-            this.BeforeQueryStatus += new EventHandler(OnBeforeQueryStatus);
+            this.BeforeQueryStatus += OnBeforeQueryStatus;
             this.Text = text;
         }
 
-        public BaseCommand(CommandID id)
+        protected BaseCommand(CommandID id)
             : this(id, string.Empty)
         {
         }
 
         protected virtual void OnBeforeQueryStatus(object sender, EventArgs e)
         {
-            OleMenuCommand command = sender as OleMenuCommand;
+            var command = sender as OleMenuCommand;
+            if (command == null)
+                return;
+
             command.Visible = this.CanExecute();
         }
 

@@ -8,17 +8,17 @@ namespace GitMenu.Commands
     public class HistoryCommand : GitCommand
     {
         public HistoryCommand(GitMenuPackage provider)
-            : base(provider, PkgCmdIDList.cmdGitHistory, CommandFlags.Track, "Git &History")
+            : base(provider, PkgCmdIdList.CmdGitHistory, CommandFlags.Track, "Git &History")
         {
 
         }
 
         protected override void OnExecute()
         {
-            string file = GitCommand.GetSelectedPath();
+            var file = GetSelectedPath();
             bool isDir;
-            string wd = Helper.WorkingDirectoryFromPath(file, out isDir);
-            string name = "";
+            var wd = Helper.WorkingDirectoryFromPath(file, out isDir);
+            var name = "";
             string output;
             if(!isDir)
                 name = file.Substring(wd.Length + 1);

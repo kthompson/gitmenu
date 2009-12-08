@@ -17,18 +17,18 @@ namespace GitMenu.Commands
     {
         public CommandFlags Selection { get; private set; }
 
-        public GitCommand(GitMenuPackage provider, int id, CommandFlags selection, string text)
-            : base(new CommandID(GuidList.guidGitMenuCmdSet, id), text)
+        protected GitCommand(GitMenuPackage provider, int id, CommandFlags selection, string text)
+            : base(new CommandID(GuidList.GuidGitMenuCmdSet, id), text)
         {
             this.Selection = selection;
-            GitCommand.Package = provider;
+            Package = provider;
         }
 
-        public GitCommand(GitMenuPackage provider, CommandID id, CommandFlags selection, string text)
+        protected GitCommand(GitMenuPackage provider, CommandID id, CommandFlags selection, string text)
             : base(id, text)
         {
             this.Selection = selection;
-            GitCommand.Package = provider;
+            Package = provider;
         }
 
         protected override bool CanExecute()
@@ -45,31 +45,33 @@ namespace GitMenu.Commands
             return false;
         }
 
-        private static CommandFlags lastMenuMask;
-        private static string lastCheckedPath;
+        private static CommandFlags _lastMenuMask;
+        private static string _lastCheckedPath;
         public static CommandFlags GetMenuMask()
         {
             var pathToCheck = GetSelectedPath();
 
-            if (pathToCheck == lastCheckedPath)
-                return lastMenuMask;
+            if (pathToCheck == _lastCheckedPath)
+                return _lastMenuMask;
 
-            lastCheckedPath = pathToCheck;
-            lastMenuMask = GetMenuMask(lastCheckedPath);
-            return lastMenuMask;
+            _lastCheckedPath = pathToCheck;
+            _lastMenuMask = GetMenuMask(_lastCheckedPath);
+            return _lastMenuMask;
         }
 
-        public static string GetSelectedPath()
+        protected static string GetSelectedPath()
         {
-            var item = GitCommand.SelectedProjectItem;
+            var item = SelectedProjectItem;
             if (item != null)
                 return item.GetFullPath();
 
-            var item2 = GitCommand.SelectedProject;
+            var item2 = SelectedProject;
             if (item2 != null)
+            {
                 return Directory.GetParent(item2.FileName).FullName;
+            }
 
-            var solution = GitCommand.GitMenuPackage.GitSccProvider.GetSolutionFileName();
+            var solution = GitMenuPackage.GitSccProvider.GetSolutionFileName();
             return solution;
         }
 
@@ -78,10 +80,10 @@ namespace GitMenu.Commands
             bool isDirectory;
             var wd = Helper.WorkingDirectoryFromPath(path, out isDirectory);
 
-            CommandFlags selection = isDirectory ? CommandFlags.Directory : CommandFlags.File;
+            var selection = isDirectory ? CommandFlags.Directory : CommandFlags.File;
             string output;
 
-            int status = Helper.Exec(wd, true, out output, Settings.Instance.GitPath, "rev-parse", "--show-prefix");
+            var status = Helper.Exec(wd, true, out output, Settings.Instance.GitPath, "rev-parse", "--show-prefix");
 
             var eol = output.IndexOf('\n');
             var line = output;
@@ -122,7 +124,7 @@ namespace GitMenu.Commands
         {
             get
             {
-                return GitCommand.Dte.SelectedItems.Cast<SelectedItem>();
+                return Dte.SelectedItems.Cast<SelectedItem>();
             }
         }
 
@@ -146,7 +148,7 @@ namespace GitMenu.Commands
         {
             get
             {
-                return GitCommand.SelectedProjectItems.FirstOrDefault();
+                return SelectedProjectItems.FirstOrDefault();
             }
         }
 
@@ -154,33 +156,33 @@ namespace GitMenu.Commands
         {
             get
             {
-                return GitCommand.SelectedProjects.FirstOrDefault();
+                return SelectedProjects.FirstOrDefault();
             }
         }
 
         public static GitMenuPackage Package { get; private set; }
 
-        private static DTE dte;
+        private static DTE _dte;
         protected static DTE Dte
         {
             get
             {
-                if (dte == null)
-                    dte = Package.GetService<DTE>();
+                if (_dte == null)
+                    _dte = Package.GetService<DTE>();
 
-                return dte;
+                return _dte;
             }
         }
 
-        private static GitMenuPackage gitMenuPackage;
+        private static GitMenuPackage _gitMenuPackage;
         protected static GitMenuPackage GitMenuPackage
         {
             get
             {
-                if (gitMenuPackage == null)
-                    gitMenuPackage = Package.GetService<GitMenuPackage>();
+                if (_gitMenuPackage == null)
+                    _gitMenuPackage = Package.GetService<GitMenuPackage>();
 
-                return gitMenuPackage;
+                return _gitMenuPackage;
             }
         }
         #endregion

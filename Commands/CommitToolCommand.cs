@@ -9,17 +9,17 @@ namespace GitMenu.Commands
     public class CommitToolCommand : GitCommand
     {
         public CommitToolCommand(GitMenuPackage provider)
-            : base(provider, PkgCmdIDList.cmdGitCommitTool, CommandFlags.Repository, "Git &Commit Tool")
+            : base(provider, PkgCmdIdList.CmdGitCommitTool, CommandFlags.Repository, "Git &Commit Tool")
         {
 
         }
 
         protected override void OnExecute()
         {
-            string file = GitCommand.GetSelectedPath();
-            string wd = Helper.WorkingDirectoryFromPath(file);
+            var file = GetSelectedPath();
+            var wd = Helper.WorkingDirectoryFromPath(file);
             Helper.Exec(wd, true, Settings.Instance.GitPath, "citool");
-            GitCommand.Package.GitSccProvider.RefreshAllGlyphs();
+            Package.GitSccProvider.RefreshAllGlyphs();
         }
     }
 }

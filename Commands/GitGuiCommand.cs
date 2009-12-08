@@ -8,14 +8,14 @@ namespace GitMenu.Commands
     public class GitGuiCommand : GitCommand
     {
         public GitGuiCommand(GitMenuPackage provider)
-            : base(provider, PkgCmdIDList.cmdGitGui, CommandFlags.Always, "Git &Gui")
+            : base(provider, PkgCmdIdList.CmdGitGui, CommandFlags.Always, "Git &Gui")
         {
         }
 
         protected override void OnExecute()
         {
-            string file = GitCommand.GetSelectedPath();
-            string wd = Helper.WorkingDirectoryFromPath(file);
+            var file = GetSelectedPath();
+            var wd = Helper.WorkingDirectoryFromPath(file);
             Helper.Exec(wd, true, Settings.Instance.GitPath, "gui");
         }
     }

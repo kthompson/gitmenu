@@ -13,14 +13,14 @@ namespace GitMenu
     {
         public static ImageList CreateStatusImageList()
         {
-            using (Stream images = typeof(StatusIcons).Assembly.GetManifestResourceStream("GitMenu.Resources.StatusIcons.bmp"))
+            using (var images = typeof(StatusIcons).Assembly.GetManifestResourceStream("GitMenu.Resources.StatusIcons.bmp"))
             {
                 if (images == null)
                     return null;
 
-                Bitmap bitmap = (Bitmap)Image.FromStream(images, true);
+                var bitmap = (Bitmap)Image.FromStream(images, true);
 
-                ImageList imageList = new ImageList();
+                var imageList = new ImageList();
                 imageList.ImageSize = new Size(8, bitmap.Height);
                 bitmap.MakeTransparent(bitmap.GetPixel(0, 0));
 

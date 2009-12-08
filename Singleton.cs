@@ -13,28 +13,12 @@ namespace GitMenu
         where T : Singleton<T>
     {
 
-        #region Constructors
-
-        /// <summary>
-        /// Static constructor so static members aren't initialized until accessed
-        /// </summary>
-        static Singleton()
-        {
-        }
-
-        #endregion
-
         #region Properties
-
-        private static bool hasInstance = false;
 
         /// <summary>
         /// Gets a boolean indicating if the instance has been created yet
         /// </summary>
-        public static bool HasInstance
-        {
-            get { return hasInstance; }
-        }
+        public static bool HasInstance { get; private set; }
 
         /// <summary>
         /// Gets the single instance of the object
@@ -59,10 +43,10 @@ namespace GitMenu
                 //since there's no protected constraint for generics we have to do this
                 //it's a lot slower... but since it's a one time deal it shouldn't be a problem
                 Instance = Activator.CreateInstance(typeof(T), true) as T;
-                hasInstance = true;
+                HasInstance = true;
             }
 
-            internal static T Instance;
+            internal static readonly T Instance;
 
         }
 

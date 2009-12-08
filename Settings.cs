@@ -39,11 +39,11 @@ namespace GitMenu
             if (service == null)
                 return;
 
-            using (RegistryKey key = service.UserRegistryRoot)
+            using (var key = service.UserRegistryRoot)
             {
-                string settingsRegistryPath = this.SettingsRegistryPath;
-                object automationObject = this.AutomationObject;
-                RegistryKey key2 = key.OpenSubKey(settingsRegistryPath, false);
+                var settingsRegistryPath = this.SettingsRegistryPath;
+                var automationObject = this.AutomationObject;
+                var key2 = key.OpenSubKey(settingsRegistryPath, false);
                 if (key2 == null)
                 {
                     this.LoadDefaultSettings();
@@ -52,12 +52,12 @@ namespace GitMenu
 
                 using (key2)
                 {
-                    string[] valueNames = key2.GetValueNames();
-                    PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(automationObject);
-                    foreach (string str2 in valueNames)
+                    var valueNames = key2.GetValueNames();
+                    var properties = TypeDescriptor.GetProperties(automationObject);
+                    foreach (var str2 in valueNames)
                     {
-                        string text = key2.GetValue(str2).ToString();
-                        PropertyDescriptor descriptor = properties[str2];
+                        var text = key2.GetValue(str2).ToString();
+                        var descriptor = properties[str2];
                         if ((descriptor != null) && descriptor.Converter.CanConvertFrom(typeof(string)))
                         {
                             descriptor.SetValue(automationObject, descriptor.Converter.ConvertFromInvariantString(text));
@@ -79,10 +79,8 @@ namespace GitMenu
                 if (defaultValue == null)
                     continue;
 
-                if ((descriptor != null) && descriptor.Converter.CanConvertFrom(defaultValue.Value.GetType()))
-                {
+                if (descriptor.Converter.CanConvertFrom(defaultValue.Value.GetType()))
                     descriptor.SetValue(automationObject, descriptor.Converter.ConvertFrom(defaultValue.Value));
-                }
             }
 
 
@@ -93,19 +91,17 @@ namespace GitMenu
             if (service == null)
                 return;
 
-            using (RegistryKey key = service.UserRegistryRoot)
+            using (var key = service.UserRegistryRoot)
             {
-                string settingsRegistryPath = this.SettingsRegistryPath;
-                object automationObject = this.AutomationObject;
-                RegistryKey key2 = key.OpenSubKey(settingsRegistryPath, true);
-                if (key2 == null)
-                    key2 = key.CreateSubKey(settingsRegistryPath);
+                var settingsRegistryPath = this.SettingsRegistryPath;
+                var automationObject = this.AutomationObject;
+                var key2 = key.OpenSubKey(settingsRegistryPath, true) ?? key.CreateSubKey(settingsRegistryPath);
 
                 using (key2)
                 {
                     foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(automationObject, new Attribute[] { DesignerSerializationVisibilityAttribute.Visible }))
                     {
-                        TypeConverter converter = descriptor.Converter;
+                        var converter = descriptor.Converter;
                         if (converter.CanConvertTo(typeof(string)) && converter.CanConvertFrom(typeof(string)))
                         {
                             key2.SetValue(descriptor.Name, converter.ConvertToInvariantString(descriptor.GetValue(automationObject)));

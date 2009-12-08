@@ -38,7 +38,7 @@ namespace GitMenu
         /// </summary>
         public Guid RegGuid
         {
-            get { return GuidList.guidGitSccProvider; }
+            get { return GuidList.GuidGitSccProvider; }
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace GitMenu
         /// </summary>
         public Guid UINamePkg
         {
-            get { return GuidList.guidGitMenuPkg; }
+            get { return GuidList.GuidGitMenuPkg; }
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace GitMenu
         /// </summary>
         public Guid SccProviderService
         {
-            get { return GuidList.guidGitSccProvider; }
+            get { return GuidList.GuidGitSccProvider; }
         }
 
         /// <summary>
@@ -69,14 +69,14 @@ namespace GitMenu
 
             // Declare the source control provider, its name, the provider's service 
             // and aditionally the packages implementing this provider
-            using (Key sccProviders = context.CreateKey("SourceControlProviders"))
+            using (var sccProviders = context.CreateKey("SourceControlProviders"))
             {
-                using (Key sccProviderKey = sccProviders.CreateSubkey(RegGuid.ToString("B")))
+                using (var sccProviderKey = sccProviders.CreateSubkey(RegGuid.ToString("B")))
                 {
                     sccProviderKey.SetValue("", RegName);
                     sccProviderKey.SetValue("Service", SccProviderService.ToString("B"));
 
-                    using (Key sccProviderNameKey = sccProviderKey.CreateSubkey("Name"))
+                    using (var sccProviderNameKey = sccProviderKey.CreateSubkey("Name"))
                     {
                         sccProviderNameKey.SetValue("", UIName);
                         sccProviderNameKey.SetValue("Package", UINamePkg.ToString("B"));
@@ -100,7 +100,7 @@ namespace GitMenu
         /// <param name="context"></param>
         public override void Unregister(RegistrationContext context)
         {
-            context.RemoveKey("SourceControlProviders\\" + GuidList.guidGitMenuPkg.ToString("B"));
+            context.RemoveKey("SourceControlProviders\\" + GuidList.GuidGitMenuPkg.ToString("B"));
         }
     }
 

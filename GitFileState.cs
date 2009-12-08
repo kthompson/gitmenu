@@ -25,12 +25,12 @@ namespace GitMenu
                 return new List<GitFileState>();
 
             bool isDir;
-            string wd = Helper.WorkingDirectoryFromPath(file, out isDir);
+            var wd = Helper.WorkingDirectoryFromPath(file, out isDir);
             string output;
 
             var files = new Dictionary<string, GitFileState>();
             
-            string name = file;
+            var name = file;
             if (!isDir)
                 name = file.Substring(wd.Length + 1);
 
@@ -50,7 +50,7 @@ namespace GitMenu
             //git ls-files -t -o -X .gitignore
             var exec = Helper.Exec(wd, true, out output, Settings.Instance.GitPath, "ls-files", "-t", "-o", "-X", ".gitignore", name);
             if (exec > 0)
-                exec = Helper.Exec(wd, true, out output, Settings.Instance.GitPath, "ls-files", "-t", "-o", name);
+                Helper.Exec(wd, true, out output, Settings.Instance.GitPath, "ls-files", "-t", "-o", name);
 
             UpdateFiles(output, files, f => f.IsUntracked = true);
 
@@ -64,9 +64,8 @@ namespace GitMenu
                 string line;
                 while ((line = sr.ReadLine()) != null)
                 {
-                    var lsfile = line.Split(new char[] { ' ', '\t' }, 2);
+                    var lsfile = line.Split(new[] { ' ', '\t' }, 2);
                     var filename = lsfile[1];
-                    var state = lsfile[0];
                     if (!files.ContainsKey(filename))
                         files.Add(filename, new GitFileState(filename));
                     

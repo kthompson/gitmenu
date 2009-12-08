@@ -9,14 +9,14 @@ namespace GitMenu.Commands
     public class InitCommand : GitCommand
     {
         public InitCommand(GitMenuPackage provider)
-            : base(provider, PkgCmdIDList.cmdGitInit, CommandFlags.NoRepository, "Git I&nit Here")
+            : base(provider, PkgCmdIdList.CmdGitInit, CommandFlags.NoRepository, "Git I&nit Here")
         {
         }
 
         protected override void OnExecute()
         {
-            string file = GitCommand.GetSelectedPath();
-            string wd = Helper.WorkingDirectoryFromPath(file);
+            var file = GetSelectedPath();
+            var wd = Helper.WorkingDirectoryFromPath(file);
             Helper.Exec(wd, true, Settings.Instance.GitPath, "init");
         }
     }
